@@ -1,0 +1,183 @@
+% Template for the Exercisesheet - Fire Simulation I/II
+% Bergische Universität Wuppertal
+
+% !!! Compile with PDFLaTeX !!!
+% Document uses the Komma-Script "article" class
+
+\documentclass[11pt, a4paper, headheight=70pt]{scrartcl}
+\voffset=2cm
+%\hoffset= ... cm
+%\textwidth= ... cm
+%\textheight= ... cm
+ 
+ 
+% Packages
+%===================================
+  
+\usepackage[utf8]{inputenc}
+
+\usepackage{enumitem}
+	\setlist[itemize]{itemsep=4pt, topsep=0pt}
+	\setlist[enumerate]{itemsep=4pt, topsep=0pt}
+
+\usepackage{graphicx}
+
+\usepackage{scrlayer-scrpage}
+
+\usepackage[hidelinks]{hyperref}
+
+\usepackage{xcolor}
+
+\usepackage{listings}
+\lstset{
+xleftmargin=2em,
+frame=single,
+framexleftmargin=1.5em,
+language=bash}
+
+%\usepackage{showframe}
+
+
+% Global Settings
+%===================================
+
+\setlength{\parindent}{0em}
+
+\setkomafont{section}{\normalfont\bfseries\large}
+\setkomafont{subsection}{\normalfont}
+\setkomafont{pagehead}{\normalfont}
+\setkomafont{pagefoot}{\normalfont}
+
+
+% Header/Footer
+%===================================
+
+\ihead{%
+	\begin{minipage}[t][63pt]{9cm}%
+		\textbf{Datenanalyse mit Python}\\
+		Summer Semester 2018\\[0.1cm]
+		Lukas Arnold, Max Böhler
+	\end{minipage}%
+}
+
+\ohead {%
+	\begin{minipage}[l][65pt]{3.85cm}%
+	\includegraphics[height=40pt]{BUW_Logo-schwarz.eps}%
+	\end{minipage}%
+}
+
+\cfoot{\pagemark}
+
+\ofoot{\today}
+
+
+% (Re-)Newcommand
+%===================================
+
+\newcommand{\subsecline}[1]{\subsection*{#1}
+\vspace{-0.5cm}
+\noindent\rule{\textwidth}{0.5pt}
+\vspace{0cm}}
+
+\RedeclareSectionCommand[
+  beforeskip=1cm]{subsection}
+
+
+
+%Main Document
+%===================================
+
+\begin{document}
+
+
+{\Large \textbf{Installation}}\\[0.2cm]
+{\Large Python 3 und Jupyter Notebook}
+
+\vspace{0.8cm}
+
+Die Installation einer Python-Umgebung kann auf unterschiedlichen Wegen erfolgen. Im Rahmen dieser Veranstaltung empfehlen wir die Installation und Verwaltung von Python mittels der \textit{miniconda} Distribution. \\
+Für die Überprüfung der Installation kann die Datei \texttt{installation\textunderscore test.ipynb} (siehe Moodle) mittels \textit{Jupyter Notebook} geöffnet und ausgeführt werden.
+
+
+\subsecline{Linux/macOS}
+\begin{enumerate}[itemsep=0.3cm]
+\item Installationsdatei herunterladen:
+\begin{lstlisting}[escapechar=|, basicstyle=\footnotesize]
+|\href{https://conda.io/miniconda.html}{https://conda.io/miniconda.html}|
+\end{lstlisting}
+
+\item Konsole (Terminal) öffnen und im Ordner der Installationsdatei folgenden Befehl ausführen (ohne \$:):
+\begin{lstlisting}[backgroundcolor = \color{lightgray}, language = Bash, framerule=0pt, basicstyle=\small]
+$: bash Miniconda3-latest-Linux-x86_64.sh
+\end{lstlisting}
+
+\item Installation durchführen und Hinweistexte in der Konsole beachten.
+\item Neustart der Konsole.
+
+\item Testen der Installation durch folgenden Befehl:
+\begin{lstlisting}[backgroundcolor = \color{lightgray}, language = Bash, framerule=0pt, basicstyle=\small]
+$: conda --version 
+\end{lstlisting}
+Wird eine Miniconda-Version angezeigt, war die Installation erfolgreich.
+
+\item Für die Installation von \textit{Jupyter Notebook} muss folgender Befehl ausgeführt \linebreak werden:
+\begin{lstlisting}[backgroundcolor = \color{lightgray}, language = Bash, framerule=0pt, basicstyle=\small]
+$: conda install jupyter
+\end{lstlisting}
+
+\item Installation durchführen und Hinweistexte in der Konsole beachten.
+%
+\item Bei erfolgreicher Installation, kann mit folgendem Befehl ein neues Notebook ge-startet werden:
+\begin{lstlisting}[backgroundcolor = \color{lightgray}, language = Bash, framerule=0pt, basicstyle=\small]
+$: jupyter notebook
+\end{lstlisting}
+\end{enumerate}
+
+\newpage
+
+\subsecline{Windows}
+
+\begin{enumerate}[itemsep=0.3cm]
+\item Installationsdateien herunterladen:
+\begin{lstlisting}[escapechar=|, basicstyle=\footnotesize]
+|\href{https://conda.io/miniconda.html}{www.conda.io/miniconda.html}|
+\end{lstlisting}
+
+\item \texttt{.exe} Datei öffnen und Installation durchführen.
+
+\item Nach der Installation kann das Programm \textit{Anaconda Prompt} geöffnet und folgender Befehl ausgeführt werden:
+\begin{lstlisting}[backgroundcolor = \color{lightgray}, language = Bash, framerule=0pt, basicstyle=\small]
+$: conda --version 
+\end{lstlisting}
+Wird eine Miniconda-Version angezeigt, war die Installation erfolgreich.
+
+\item Für die Installation von \textit{Jupyter Notebook} muss folgender Befehl innerhalb der \textit{Anaconda Prompt} ausgeführt werden:
+\begin{lstlisting}[backgroundcolor = \color{lightgray}, language = Bash, framerule=0pt, basicstyle=\small]
+$: conda install jupyter
+\end{lstlisting}
+
+\item Bei erfolgreicher Installation, kann mit folgendem Befehl innerhalb der \textit{Anaconda Prompt} ein neues Notebook geöffnet werden:
+\begin{lstlisting}[backgroundcolor = \color{lightgray}, language = Bash, framerule=0pt, basicstyle=\small]
+$: jupyter notebook
+\end{lstlisting}
+
+\end{enumerate}
+
+\subsecline{Installation zusätzlicher Packete (Linux/macOS/Windows)}
+
+Für die Installation weiterer Python Packete muss der Befehl
+\begin{lstlisting}[backgroundcolor = \color{lightgray}, language = Bash, framerule=0pt, basicstyle=\small]
+conda install <Packetname>
+\end{lstlisting}
+\vspace{0.1cm}
+innerhalb des \textit{Terminals} (Linux/macOS) oder, im Fall von Windows Betriebssystemen, innerhalb der \textit{Anaconda Prompt} ausgeführt werden. Insbesondere folgende Packete werden im Rahmen dieser Veranstaltung benötigt und sollten auf dem System installiert sein:
+\vspace{0.3cm}
+\begin{itemize}
+\setlength\itemsep{3pt}
+\item \textit{matplotlib}
+\item \textit{numpy}
+\item \textit{pandas}
+\end{itemize}
+
+
+\end{document}

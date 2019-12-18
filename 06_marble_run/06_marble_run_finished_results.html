@@ -1,0 +1,3604 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,minimum-scale=1">
+
+  <title>Marble Run</title>
+  <meta name="description" content="        Marble Run                 Data Analysis with Python         Winter Semester 2018/2019        Lukas Arnold and Max Böhler                            ...">
+
+  <link rel="canonical" href="http://Data_Analysis.com//06_marble_run/06_marble_run_finished_results.html">
+  <link rel="alternate" type="application/rss+xml" title="Data Analysis with Python" href="http://Data_Analysis.com//feed.xml">
+
+  <meta property="og:url"         content="http://Data_Analysis.com//06_marble_run/06_marble_run_finished_results.html" />
+<meta property="og:type"        content="article" />
+<meta property="og:title"       content="Marble Run" />
+<meta property="og:description" content="        Marble Run                 Data Analysis with Python         Winter Semester 2018/2019        Lukas Arnold and Max Böhler                            ..." />
+<meta property="og:image"       content="http://data_analysis.com/images/logo/logo.png" />
+
+<meta name="twitter:card" content="summary">
+
+
+  <script type="application/ld+json">
+  {
+  "@context": "http://schema.org",
+  "@type": "NewsArticle",
+  "mainEntityOfPage": "http://Data_Analysis.com//06_marble_run/06_marble_run_finished_results.html",
+  "headline": "Marble Run",
+  "datePublished": "2019-12-18T15:27:01+01:00",
+  "dateModified": "2019-12-18T15:27:01+01:00",
+  "description": "        Marble Run                 Data Analysis with Python         Winter Semester 2018/2019        Lukas Arnold and Max Böhler                            ...",
+  "author": {
+    "@type": "Person",
+    "name": "Prof. Dr. Lukas Arnold"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Data 100 at UC Berkeley",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://Data_Analysis.com/",
+      "width": 60,
+      "height": 60
+    }
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "http://Data_Analysis.com/",
+    "height": 60,
+    "width": 60
+  }
+}
+
+  </script>
+  <link rel="stylesheet" href="/assets/css/styles.css">
+
+  <!-- <link rel="manifest" href="/manifest.json"> -->
+  <!-- <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#efae0a"> -->
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+  <meta name="theme-color" content="#233947">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="/images/logo/favicon.ico">
+
+  <!-- MathJax Config -->
+  <!-- Allow inline math using $ and automatically break long math lines -->
+<!-- (mostly) copied from nbconvert configuration -->
+<!-- https://github.com/jupyter/nbconvert/blob/master/nbconvert/templates/html/mathjax.tpl -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+        processEscapes: true,
+        processEnvironments: true
+    },
+    // Center justify equations in code and markdown cells. Elsewhere
+    // we use CSS to left justify single line equations in code cells.
+    displayAlign: 'center',
+    "HTML-CSS": {
+        styles: {'.MathJax_Display': {"margin": 0}},
+        linebreaks: { automatic: true },
+    },
+    
+});
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS_HTML' async></script>
+
+
+  <!-- DOM updating function -->
+  <script src="/assets/js/page/dom-update.js"></script>
+
+  <!-- Selectors for elements on the page -->
+  <script src="/assets/js/page/documentSelectors.js"></script>
+
+  <!-- Define some javascript variables that will be useful in other javascript -->
+  <script>
+    const site_basename = '/';
+  </script>
+
+  <!-- Add AnchorJS to let headers be linked -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.0/anchor.min.js" async></script>
+  <script src="/assets/js/page/anchors.js" async></script>
+
+  <!-- Include Turbolinks to make page loads fast -->
+  <!-- https://github.com/turbolinks/turbolinks -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/turbolinks/5.2.0/turbolinks.js" async></script>
+  <meta name="turbolinks-cache-control" content="no-cache">
+
+  <!-- Load nbinteract for widgets -->
+  
+
+  <!-- Load Thebelab for interactive widgets -->
+  <!-- Include Thebelab for interactive code if it's enabled -->
+
+
+<!-- Display Thebelab button in each code cell -->
+<script>
+/**
+ * Set up thebelab button for code blocks
+ */
+
+const thebelabCellButton = id =>
+  `<a id="thebelab-cell-button-${id}" class="btn thebebtn o-tooltip--left" data-tooltip="Interactive Mode">
+    <img src="/assets/images/edit-button.svg" alt="Start thebelab interactive mode">
+  </a>`
+
+
+const addThebelabButtonToCodeCells =  () => {
+
+  const codeCells = document.querySelectorAll('div.input_area > div.highlight:not(.output) pre')
+  codeCells.forEach((codeCell, index) => {
+    const id = codeCellId(index)
+    codeCell.setAttribute('id', id)
+    if (document.getElementById("thebelab-cell-button-" + id) == null) {
+      codeCell.insertAdjacentHTML('afterend', thebelabCellButton(id));
+    }
+  })
+}
+
+initFunction(addThebelabButtonToCodeCells);
+</script>
+
+
+<script src="https://unpkg.com/thebelab@latest/lib/index.js" async></script>
+<script>
+    /**
+     * Add attributes to Thebelab blocks
+     */
+
+    const initThebelab = () => {
+        const addThebelabToCodeCells = () => {
+            console.log("Adding thebelab to code cells...");
+            // If Thebelab hasn't loaded, wait a bit and try again. This
+            // happens because we load ClipboardJS asynchronously.
+            if (window.thebelab === undefined) {
+                setTimeout(addThebelabToCodeCells, 250)
+            return
+            }
+
+            // If we already detect a Thebelab cell, don't re-run
+            if (document.querySelectorAll('div.thebelab-cell').length > 0) {
+                return;
+            }
+
+            // Find all code cells, replace with Thebelab interactive code cells
+            const codeCells = document.querySelectorAll('.input_area pre')
+            codeCells.forEach((codeCell, index) => {
+                const id = codeCellId(index)
+
+                // Clean up the language to make it work w/ CodeMirror and add it to the cell
+                dataLanguage = ""
+                dataLanguage = detectLanguage(dataLanguage);
+                codeCell.setAttribute('data-language', dataLanguage)
+                codeCell.setAttribute('data-executable', 'true')
+
+                // If the code cell is hidden, show it
+                var inputCheckbox = document.querySelector(`input#hidebtn${codeCell.id}`);
+                if (inputCheckbox !== null) {
+                    setCodeCellVisibility(inputCheckbox, 'visible');
+                }
+            });
+
+            // Remove the event listener from the page so keyboard press doesn't
+            // Change page
+            document.removeEventListener('keydown', initPageNav)
+            keyboardListener = false;
+
+            // Init thebelab
+            thebelab.bootstrap();
+
+            // Remove copy buttons since they won't work anymore
+            const copyAndThebeButtons = document.querySelectorAll('.copybtn, .thebebtn')
+            copyAndThebeButtons.forEach((button, index) => {
+                button.remove();
+            });
+
+            // Remove outputs since they'll be stale
+            const outputs = document.querySelectorAll('.output *, .output')
+            outputs.forEach((output, index) => {
+                output.remove();
+            });
+
+            // Find any cells with an initialization tag and ask ThebeLab to run them when ready
+            var thebeInitCells = document.querySelectorAll('div.tag_thebelab-init');
+            thebeInitCells.forEach((cell) => {
+                console.log("Initializing ThebeLab with cell: " + cell.id);
+                cell.querySelector('.thebelab-run-button').click();
+            });
+        }
+
+        // Add event listener for the function to modify code cells
+        const thebelabButtons = document.querySelectorAll('[id^=thebelab], [id$=thebelab]')
+        thebelabButtons.forEach((thebelabButton,index) => {
+            if (thebelabButton === null) {
+                setTimeout(initThebelab, 250)
+                return
+            };
+            thebelabButton.addEventListener('click', addThebelabToCodeCells);
+        });
+    }
+
+    // Initialize Thebelab
+    initFunction(initThebelab);
+
+// Helper function to munge the language name
+var detectLanguage = (language) => {
+    if (language.indexOf('python') > -1) {
+        language = "python";
+    }
+    return language;
+}
+</script>
+
+
+
+  <!-- Load the auto-generating TOC (non-async otherwise the TOC won't load w/ turbolinks) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.8.1/tocbot.min.js" async></script>
+  <script src="/assets/js/page/tocbot.js"></script>
+
+  <!-- Google analytics -->
+  
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', '');
+</script>
+
+
+
+  <!-- Clipboard copy button -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" async></script>
+
+  <!-- Load custom website scripts -->
+  <script src="/assets/js/scripts.js" async></script>
+
+  <!-- Load custom user CSS and JS  -->
+  <script src="/assets/custom/custom.js" async></script>
+  <link rel="stylesheet" href="/assets/custom/custom.css">
+
+  <!-- Update interact links w/ REST param, is defined in includes so we can use templates -->
+  
+
+  <!-- Lunr search code - will only be executed on the /search page -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.6/lunr.min.js" async></script>
+  <script>var initQuery = function() {
+  // See if we have a search box
+  var searchInput = document.querySelector('input#lunr_search');
+  if (searchInput === null) {
+    return;
+  }
+
+  // Function to parse our lunr cache
+  var idx = lunr(function () {
+    this.field('title')
+    this.field('excerpt')
+    this.field('categories')
+    this.field('tags')
+    this.ref('id')
+
+    this.pipeline.remove(lunr.trimmer)
+
+    for (var item in store) {
+      this.add({
+        title: store[item].title,
+        excerpt: store[item].excerpt,
+        categories: store[item].categories,
+        tags: store[item].tags,
+        id: item
+      })
+    }
+  });
+
+  // Run search upon keyup
+  searchInput.addEventListener('keyup', function () {
+    var resultdiv = document.querySelector('#results');
+    var query = document.querySelector("input#lunr_search").value.toLowerCase();
+    var result =
+      idx.query(function (q) {
+        query.split(lunr.tokenizer.separator).forEach(function (term) {
+          q.term(term, { boost: 100 })
+          if(query.lastIndexOf(" ") != query.length-1){
+            q.term(term, {  usePipeline: false, wildcard: lunr.Query.wildcard.TRAILING, boost: 10 })
+          }
+          if (term != ""){
+            q.term(term, {  usePipeline: false, editDistance: 1, boost: 1 })
+          }
+        })
+      });
+
+      // Empty the results div
+      while (resultdiv.firstChild) {
+        resultdiv.removeChild(resultdiv.firstChild);
+      }
+
+    resultdiv.insertAdjacentHTML('afterbegin', '<p class="results__found">'+result.length+' Result(s) found</p>');
+    for (var item in result) {
+      var ref = result[item].ref;
+      if(store[ref].teaser){
+        var searchitem =
+          '<div class="list__item">'+
+            '<article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">'+
+              '<h2 class="archive__item-title" itemprop="headline">'+
+                '<a href="'+store[ref].url+'" rel="permalink">'+store[ref].title+'</a>'+
+              '</h2>'+
+              '<div class="archive__item-teaser">'+
+                '<img src="'+store[ref].teaser+'" alt="">'+
+              '</div>'+
+              '<p class="archive__item-excerpt" itemprop="description">'+store[ref].excerpt.split(" ").splice(0,20).join(" ")+'...</p>'+
+            '</article>'+
+          '</div>';
+      }
+      else{
+    	  var searchitem =
+          '<div class="list__item">'+
+            '<article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">'+
+              '<h2 class="archive__item-title" itemprop="headline">'+
+                '<a href="'+store[ref].url+'" rel="permalink">'+store[ref].title+'</a>'+
+              '</h2>'+
+              '<p class="archive__item-excerpt" itemprop="description">'+store[ref].excerpt.split(" ").splice(0,20).join(" ")+'...</p>'+
+            '</article>'+
+          '</div>';
+      }
+      resultdiv.insertAdjacentHTML('beforeend', searchitem);
+    }
+  });
+};
+
+initFunction(initQuery);
+</script>
+
+  <!-- Load JS that depends on site variables -->
+  <script src="/assets/js/page/copy-button.js" async></script>
+
+  <!-- Hide cell code -->
+  <script src="/assets/js/page/hide-cell.js" async></script>
+
+  <!-- Printing the screen -->
+  <!-- Include nbinteract for interactive widgets -->
+<script src="https://printjs-4de6.kxcdn.com/print.min.js" async></script>
+<script>
+printContent = () => {
+    // MathJax displays a second version of any math for assistive devices etc.
+    // This prevents double-rendering in the PDF output.
+    var ignoreAssistList = [];
+    assistives = document.querySelectorAll('.MathJax_Display span.MJX_Assistive_MathML').forEach((element, index) => {
+        var thisId = 'MathJax-assistive-' + index.toString();
+        element.setAttribute('id', thisId);
+        ignoreAssistList.push(thisId)
+    });
+
+    // Print the actual content object
+    printJS({
+        printable: 'textbook_content',
+        type: 'html',
+        css: "/assets/css/styles.css",
+        style: "#textbook_content {padding-top: 40px};",
+        scanStyles: false,
+        targetStyles: ["*"],
+        ignoreElements: ignoreAssistList,
+        documentTitle: "Made with Jupyter Book"
+    })
+};
+
+initPrint = () => {
+    document.querySelector('#interact-button-print').addEventListener('click', printContent)
+}
+
+initFunction(initPrint)
+</script>
+
+</head>
+
+  <body>
+    <!-- Include the ThebeLab config so it gets reloaded on each page -->
+    <script type="text/x-thebe-config">{
+    requestKernel: true,
+    binderOptions: {
+    repo: "YOUR-ORG/YOUR-REPO",
+    ref: "gh-pages",
+    },
+    codeMirrorConfig: {
+    theme: "abcdef",
+    mode: "python"
+    },
+    kernelOptions: {
+    kernelName: "python3",
+    path: "content/06_marble_run"
+    }
+}
+</script>
+
+    <!-- .js-show-sidebar shows sidebar by default -->
+    <div id="js-textbook" class="c-textbook js-show-sidebar">
+      
+
+
+
+<nav id="js-sidebar" class="c-textbook__sidebar">
+  <a href="None"><img src="/images/logo/logo.png" class="textbook_logo" id="sidebar-logo" alt="textbook logo" data-turbolinks-permanent/></a>
+  <h2 class="c-sidebar__title">Data Analysis with Python</h2>
+  <ul class="c-sidebar__chapters">
+    
+      
+      
+        <li><h2 class="c-sidebar__title">ToC</li>
+        
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter" data-url="/01_introduction/Python_Basics">
+        <a class="c-sidebar__entry"
+          href="/01_introduction/Python_Basics.html"
+        >
+          
+            1.
+          
+          Python Basics
+        </a>
+      </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
+
+      
+    
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter" data-url="/02_flow_control/02_flow_control">
+        <a class="c-sidebar__entry"
+          href="/02_flow_control/02_flow_control.html"
+        >
+          
+            2.
+          
+          Flow Control
+        </a>
+      </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
+        
+
+        
+
+        <ul class="c-sidebar__sections u-hidden-visually">
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/02_flow_control/02_flow_control_solution">
+              <a class="c-sidebar__entry"
+                href="/02_flow_control/02_flow_control_solution.html"
+              >
+                
+                  2.1
+                
+                Solutions
+              </a>
+            </li>
+            
+            
+          
+        </ul>
+      
+
+      
+    
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter" data-url="/03_matplotlib/03_matplotlib_basics">
+        <a class="c-sidebar__entry"
+          href="/03_matplotlib/03_matplotlib_basics.html"
+        >
+          
+            3.
+          
+          Matplotlib
+        </a>
+      </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
+        
+
+        
+
+        <ul class="c-sidebar__sections u-hidden-visually">
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/03_matplotlib/03_matplotlib_basics_solution">
+              <a class="c-sidebar__entry"
+                href="/03_matplotlib/03_matplotlib_basics_solution.html"
+              >
+                
+                  3.1
+                
+                Solutions
+              </a>
+            </li>
+            
+            
+          
+        </ul>
+      
+
+      
+    
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter" data-url="/04_numpy/04_numpy_basics">
+        <a class="c-sidebar__entry"
+          href="/04_numpy/04_numpy_basics.html"
+        >
+          
+            4.
+          
+          Numpy
+        </a>
+      </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
+        
+
+        
+
+        <ul class="c-sidebar__sections u-hidden-visually">
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/04_numpy/04_numpy_basics_solution">
+              <a class="c-sidebar__entry"
+                href="/04_numpy/04_numpy_basics_solution.html"
+              >
+                
+                  4.1
+                
+                Solutions
+              </a>
+            </li>
+            
+            
+          
+        </ul>
+      
+
+      
+    
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter" data-url="/05_optimisation/05_data_optimization">
+        <a class="c-sidebar__entry"
+          href="/05_optimisation/05_data_optimization.html"
+        >
+          
+            5.
+          
+          Optimization
+        </a>
+      </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
+        
+
+        
+
+        <ul class="c-sidebar__sections u-hidden-visually">
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/05_optimisation/05_data_optimization_solution">
+              <a class="c-sidebar__entry"
+                href="/05_optimisation/05_data_optimization_solution.html"
+              >
+                
+                  5.1
+                
+                Solutions
+              </a>
+            </li>
+            
+            
+          
+        </ul>
+      
+
+      
+    
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter" data-url="/06_marble_run/06_image_processing">
+        <a class="c-sidebar__entry"
+          href="/06_marble_run/06_image_processing.html"
+        >
+          
+            6.
+          
+          Image Processing
+        </a>
+      </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
+        
+
+        
+
+        <ul class="c-sidebar__sections u-hidden-visually">
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/06_marble_run/06_image_processing">
+              <a class="c-sidebar__entry"
+                href="/06_marble_run/06_image_processing.html"
+              >
+                
+                  6.1
+                
+                Image Processing
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/06_marble_run/06_marble_run_finished_results">
+              <a class="c-sidebar__entry"
+                href="/06_marble_run/06_marble_run_finished_results.html"
+              >
+                
+                  6.2
+                
+                Marble Run
+              </a>
+            </li>
+            
+            
+          
+        </ul>
+      
+
+      
+    
+      
+      
+        <li class="c-sidebar__divider"></li>
+        
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter" data-url="https://github.com/jupyter/jupyter-book">
+        <a class="c-sidebar__entry"
+          href="https://github.com/jupyter/jupyter-book"
+        >
+          
+          GitHub repository
+        </a>
+      </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
+
+      
+    
+  </ul>
+  <p class="sidebar_footer">Powered by <a href="https://jupyterbook.org">Jupyter Book</a></p>
+</nav>
+
+      
+      <div class="c-topbar" id="top-navbar">
+  <!-- We show the sidebar by default so we use .is-active -->
+  <div class="c-topbar__buttons">
+    <button
+      id="js-sidebar-toggle"
+      class="hamburger hamburger--arrowalt is-active"
+    >
+      <span class="hamburger-box">
+        <span class="hamburger-inner"></span>
+      </span>
+    </button>
+    <div class="buttons">
+<div class="download-buttons-dropdown">
+    <button id="dropdown-button-trigger" class="interact-button"><img src="/assets/images/download-solid.svg" alt="Download" /></button>
+    <div class="download-buttons">
+        <a href="/content/06_marble_run/06_marble_run_finished_results.ipynb" download>
+        <button id="interact-button-download" class="interact-button">.ipynb</button>
+        </a>
+        
+        <a id="interact-button-print"><button id="interact-button-download" class="interact-button">.pdf</button></a>
+    </div>
+</div>
+
+
+  <button id="interact-button-thebelab" class="interact-button">Thebelab</button>
+
+  
+  
+  
+
+
+</div>
+
+  </div>
+  <!-- Empty sidebar placeholder that we'll auto-fill with javascript -->
+  <aside class="sidebar__right">
+    <header><h4 class="nav__title"><img src="/assets/images/list-solid.svg" alt="Search" />   On this page</h4></header>
+    <nav class="onthispage">
+    </nav>
+  </aside>
+  <a href="/search.html" class="topbar-right-button" id="search-button">
+    <img src="/assets/images/search-solid.svg" alt="Search" />
+  </a>
+</div>
+
+      <main class="c-textbook__page" tabindex="-1">
+            <div class="c-textbook__content" id="textbook_content">
+                  <main class="jupyter-page">
+    <div id="page-info"><div id="page-title">Marble Run</div>
+</div>
+    <div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div style="width: 100%; overflow: hidden;">
+    <div style="width: 500px; float: left;"> 
+        <h1>Data Analysis with Python</h1> <br>
+        <b>Winter Semester 2018/2019</b><br>
+        <b>Lukas Arnold and Max Böhler</b>
+    </div>
+    <div style="float:right;"> 
+        <img src="images/fzj_logo.png" style="width:150px;"/>
+        <img src="images/buw_logo.png" style="width:150px;"/>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">image</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;./data_red_ball/output_000400.png&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>(1080, 1920, 3)
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;matplotlib.image.AxesImage at 0x11727e128&gt;</pre>
+</div>
+
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../images/06_marble_run/06_marble_run_finished_results_3_1.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">image</span><span class="p">[:,:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;bool&#39;</span><span class="p">)</span>
+<span class="n">mask</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([[False, False, False, ..., False, False, False],
+       [False, False, False, ..., False, False, False],
+       [False, False, False, ..., False, False, False],
+       ...,
+       [False, False, False, ..., False, False, False],
+       [False, False, False, ..., False, False, False],
+       [False, False, False, ..., False, False, False]])</pre>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">image</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;./data_red_ball/output_000400.png&quot;</span><span class="p">)[:</span><span class="mi">200</span><span class="p">,</span> <span class="mi">1000</span><span class="p">:</span><span class="mi">1200</span><span class="p">,:]</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">image</span><span class="p">[:,:,</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">image</span><span class="p">[:,:,</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">image</span><span class="p">[:,:,</span><span class="mi">2</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">r</span><span class="p">[</span><span class="n">r</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="o">*</span><span class="n">b</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">r</span><span class="p">[</span><span class="n">r</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="o">*</span><span class="n">g</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">r</span><span class="p">[</span><span class="n">r</span> <span class="o">&lt;</span> <span class="mf">0.2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="c1"># # plt.imshow(g &lt; 0.10)</span>
+<span class="c1"># # plt.show()</span>
+<span class="c1"># # plt.imshow(b &lt; 0.10)</span>
+<span class="c1"># # plt.show()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># plt.hist(r.ravel(), 100, [0.01,1.0])</span>
+<span class="c1"># plt.show()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../images/06_marble_run/06_marble_run_finished_results_5_0.png"
+>
+</div>
+
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../images/06_marble_run/06_marble_run_finished_results_5_1.png"
+>
+</div>
+
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../images/06_marble_run/06_marble_run_finished_results_5_2.png"
+>
+</div>
+
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../images/06_marble_run/06_marble_run_finished_results_5_3.png"
+>
+</div>
+
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../images/06_marble_run/06_marble_run_finished_results_5_4.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">ndenumerate</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="mf">0.01</span><span class="p">:</span>
+        <span class="n">y</span> <span class="o">+=</span> <span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">x</span> <span class="o">+=</span> <span class="n">index</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="n">n</span><span class="p">,</span><span class="n">y</span><span class="o">/</span><span class="n">n</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>97.1590909090909 115.07386363636364
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">get_ball_position</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="c1">#[:200, 1000:1200,:]</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">image</span><span class="p">[:,:,</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">image</span><span class="p">[:,:,</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">image</span><span class="p">[:,:,</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="n">r</span><span class="p">[</span><span class="n">r</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="o">*</span><span class="n">b</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">r</span><span class="p">[</span><span class="n">r</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="o">*</span><span class="n">g</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">r</span><span class="p">[</span><span class="n">r</span> <span class="o">&lt;</span> <span class="mf">0.4</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">ndenumerate</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="mf">0.01</span><span class="p">:</span>
+            <span class="n">y</span> <span class="o">+=</span> <span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">x</span> <span class="o">+=</span> <span class="n">index</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+    
+    <span class="k">return</span> <span class="n">x</span><span class="o">/</span><span class="n">n</span><span class="p">,</span> <span class="n">y</span><span class="o">/</span><span class="n">n</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">glob</span>
+<span class="n">filelist</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;data_red_ball/output_000[345678]??.png&#39;</span><span class="p">))</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">filelist</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;processing file: &quot;</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span> <span class="o">=</span> <span class="n">get_ball_position</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">)</span>
+    <span class="n">x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cx</span><span class="p">)</span>
+    <span class="n">y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cy</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>processing file:  data_red_ball/output_000300.png
+1515.13698630137 347.67123287671234
+processing file:  data_red_ball/output_000301.png
+1515.4142857142858 347.85714285714283
+processing file:  data_red_ball/output_000302.png
+1515.4285714285713 347.9142857142857
+processing file:  data_red_ball/output_000303.png
+1515.4027777777778 347.97222222222223
+processing file:  data_red_ball/output_000304.png
+1515.338028169014 347.92957746478874
+processing file:  data_red_ball/output_000305.png
+1515.3661971830986 347.90140845070425
+processing file:  data_red_ball/output_000306.png
+1515.2957746478874 347.6901408450704
+processing file:  data_red_ball/output_000307.png
+1515.263888888889 347.7361111111111
+processing file:  data_red_ball/output_000308.png
+1515.2777777777778 347.75
+processing file:  data_red_ball/output_000309.png
+1515.2702702702702 347.77027027027026
+processing file:  data_red_ball/output_000310.png
+1515.4202898550725 347.7536231884058
+processing file:  data_red_ball/output_000311.png
+1515.4571428571428 347.84285714285716
+processing file:  data_red_ball/output_000312.png
+1515.4794520547946 347.8767123287671
+processing file:  data_red_ball/output_000313.png
+1515.25 347.7916666666667
+processing file:  data_red_ball/output_000314.png
+1515.281690140845 347.77464788732397
+processing file:  data_red_ball/output_000315.png
+1515.2602739726028 347.7671232876712
+processing file:  data_red_ball/output_000316.png
+1515.2533333333333 347.82666666666665
+processing file:  data_red_ball/output_000317.png
+1515.025 347.75
+processing file:  data_red_ball/output_000318.png
+1515.179487179487 347.84615384615387
+processing file:  data_red_ball/output_000319.png
+1515.2857142857142 347.8051948051948
+processing file:  data_red_ball/output_000320.png
+1515.7051282051282 347.93589743589746
+processing file:  data_red_ball/output_000321.png
+1515.7375 347.975
+processing file:  data_red_ball/output_000322.png
+1515.7435897435898 347.9230769230769
+processing file:  data_red_ball/output_000323.png
+1515.7051282051282 347.88461538461536
+processing file:  data_red_ball/output_000324.png
+1515.4556962025317 347.7721518987342
+processing file:  data_red_ball/output_000325.png
+1515.4634146341464 347.8536585365854
+processing file:  data_red_ball/output_000326.png
+1515.6951219512196 347.8536585365854
+processing file:  data_red_ball/output_000327.png
+1515.6265060240964 347.93975903614455
+processing file:  data_red_ball/output_000328.png
+1515.7926829268292 347.9756097560976
+processing file:  data_red_ball/output_000329.png
+1515.851851851852 348.0740740740741
+processing file:  data_red_ball/output_000330.png
+1515.7317073170732 347.8780487804878
+processing file:  data_red_ball/output_000331.png
+1515.625 347.79545454545456
+processing file:  data_red_ball/output_000332.png
+1515.270588235294 347.63529411764705
+processing file:  data_red_ball/output_000333.png
+1515.0581395348838 347.6046511627907
+processing file:  data_red_ball/output_000334.png
+1514.7333333333333 347.46666666666664
+processing file:  data_red_ball/output_000335.png
+1514.5934065934066 347.35164835164835
+processing file:  data_red_ball/output_000336.png
+1514.1063829787233 347.0531914893617
+processing file:  data_red_ball/output_000337.png
+1514.268817204301 347.1290322580645
+processing file:  data_red_ball/output_000338.png
+1514.3333333333333 347.18279569892474
+processing file:  data_red_ball/output_000339.png
+1514.0842105263157 347.09473684210525
+processing file:  data_red_ball/output_000340.png
+1514.09375 347.1041666666667
+processing file:  data_red_ball/output_000341.png
+1513.298969072165 346.96907216494844
+processing file:  data_red_ball/output_000342.png
+1512.54 346.64
+processing file:  data_red_ball/output_000343.png
+1511.6666666666667 345.6041666666667
+processing file:  data_red_ball/output_000344.png
+1510.3366336633662 344.83168316831683
+processing file:  data_red_ball/output_000345.png
+1510.2244897959183 344.3265306122449
+processing file:  data_red_ball/output_000346.png
+1510.5280898876404 343.438202247191
+processing file:  data_red_ball/output_000347.png
+1510.4673913043478 343.39130434782606
+processing file:  data_red_ball/output_000348.png
+1510.3829787234042 343.7659574468085
+processing file:  data_red_ball/output_000349.png
+1510.0106382978724 343.8404255319149
+processing file:  data_red_ball/output_000350.png
+1510.268817204301 343.4301075268817
+processing file:  data_red_ball/output_000351.png
+1510.125 343.0520833333333
+processing file:  data_red_ball/output_000352.png
+1509.9333333333334 343.4222222222222
+processing file:  data_red_ball/output_000353.png
+1509.9550561797753 343.685393258427
+processing file:  data_red_ball/output_000354.png
+1510.0 343.46067415730334
+processing file:  data_red_ball/output_000355.png
+1510.4719101123596 343.35955056179773
+processing file:  data_red_ball/output_000356.png
+1510.5 343.5531914893617
+processing file:  data_red_ball/output_000357.png
+1510.2886597938145 343.8659793814433
+processing file:  data_red_ball/output_000358.png
+1510.3157894736842 343.4736842105263
+processing file:  data_red_ball/output_000359.png
+1510.4505494505495 343.2637362637363
+processing file:  data_red_ball/output_000360.png
+1510.2680412371135 343.45360824742266
+processing file:  data_red_ball/output_000361.png
+1510.287234042553 343.67021276595744
+processing file:  data_red_ball/output_000362.png
+1510.5760869565217 343.1630434782609
+processing file:  data_red_ball/output_000363.png
+1510.6 342.9684210526316
+processing file:  data_red_ball/output_000364.png
+1511.0113636363637 343.39772727272725
+processing file:  data_red_ball/output_000365.png
+1510.4065934065934 343.3626373626374
+processing file:  data_red_ball/output_000366.png
+1510.0444444444445 343.0111111111111
+processing file:  data_red_ball/output_000367.png
+1509.4719101123596 342.60674157303373
+processing file:  data_red_ball/output_000368.png
+1508.5098039215686 342.52941176470586
+processing file:  data_red_ball/output_000369.png
+1507.032258064516 341.59139784946234
+processing file:  data_red_ball/output_000370.png
+1504.7291666666667 340.6145833333333
+processing file:  data_red_ball/output_000371.png
+1503.030303030303 339.1010101010101
+processing file:  data_red_ball/output_000372.png
+1500.4537037037037 337.19444444444446
+processing file:  data_red_ball/output_000373.png
+1496.6396396396397 335.2072072072072
+processing file:  data_red_ball/output_000374.png
+1491.4545454545455 333.1090909090909
+processing file:  data_red_ball/output_000375.png
+1485.525 329.40833333333336
+processing file:  data_red_ball/output_000376.png
+1478.8898305084747 326.08474576271186
+processing file:  data_red_ball/output_000377.png
+1471.0413223140497 321.78512396694214
+processing file:  data_red_ball/output_000378.png
+1463.1587301587301 317.07936507936506
+processing file:  data_red_ball/output_000379.png
+1454.671755725191 312.22137404580155
+processing file:  data_red_ball/output_000380.png
+1444.9057971014493 307.07246376811594
+processing file:  data_red_ball/output_000381.png
+1434.5886524822695 301.6666666666667
+processing file:  data_red_ball/output_000382.png
+1422.8357142857142 295.39285714285717
+processing file:  data_red_ball/output_000383.png
+1410.7591240875913 289.007299270073
+processing file:  data_red_ball/output_000384.png
+1397.2121212121212 281.3787878787879
+processing file:  data_red_ball/output_000385.png
+1383.3525179856115 274.1294964028777
+processing file:  data_red_ball/output_000386.png
+1369.75 266.4513888888889
+processing file:  data_red_ball/output_000387.png
+1353.094890510949 257.53284671532845
+processing file:  data_red_ball/output_000388.png
+1337.6641221374045 248.8091603053435
+processing file:  data_red_ball/output_000389.png
+1320.6846153846154 239.5076923076923
+processing file:  data_red_ball/output_000390.png
+1302.7785714285715 229.81428571428572
+processing file:  data_red_ball/output_000391.png
+1286.0137931034483 220.5103448275862
+processing file:  data_red_ball/output_000392.png
+1268.9727891156463 210.71428571428572
+processing file:  data_red_ball/output_000393.png
+1247.6776859504132 199.11570247933884
+processing file:  data_red_ball/output_000394.png
+1226.3257575757575 187.53787878787878
+processing file:  data_red_ball/output_000395.png
+1208.2727272727273 177.1590909090909
+processing file:  data_red_ball/output_000396.png
+1185.2517482517483 164.82517482517483
+processing file:  data_red_ball/output_000397.png
+1164.9801324503312 153.3046357615894
+processing file:  data_red_ball/output_000398.png
+1142.087591240876 139.97080291970804
+processing file:  data_red_ball/output_000399.png
+1121.2248062015503 128.5503875968992
+processing file:  data_red_ball/output_000400.png
+1097.1978021978023 115.02197802197803
+processing file:  data_red_ball/output_000401.png
+1072.8048780487804 110.40243902439025
+processing file:  data_red_ball/output_000402.png
+1048.1463414634147 110.48780487804878
+processing file:  data_red_ball/output_000403.png
+1024.2736842105264 115.32631578947368
+processing file:  data_red_ball/output_000404.png
+1001.6764705882352 126.58823529411765
+processing file:  data_red_ball/output_000405.png
+983.1210191082803 137.10828025477707
+processing file:  data_red_ball/output_000406.png
+960.4635761589404 149.3774834437086
+processing file:  data_red_ball/output_000407.png
+942.0175438596491 159.53216374269005
+processing file:  data_red_ball/output_000408.png
+922.0727272727273 170.47878787878787
+processing file:  data_red_ball/output_000409.png
+903.6381578947369 180.90131578947367
+processing file:  data_red_ball/output_000410.png
+883.9097744360902 191.06015037593986
+processing file:  data_red_ball/output_000411.png
+865.3648648648649 201.18243243243242
+processing file:  data_red_ball/output_000412.png
+846.34 211.12
+processing file:  data_red_ball/output_000413.png
+829.1176470588235 220.56209150326796
+processing file:  data_red_ball/output_000414.png
+810.7594936708861 230.54430379746836
+processing file:  data_red_ball/output_000415.png
+792.6111111111111 239.93827160493828
+processing file:  data_red_ball/output_000416.png
+775.9090909090909 248.55844155844156
+processing file:  data_red_ball/output_000417.png
+759.7843137254902 257.47712418300654
+processing file:  data_red_ball/output_000418.png
+741.4955752212389 265.3893805309734
+processing file:  data_red_ball/output_000419.png
+721.8514851485148 268.35643564356434
+processing file:  data_red_ball/output_000420.png
+703.3737373737374 269.27272727272725
+processing file:  data_red_ball/output_000421.png
+684.5841584158416 266.029702970297
+processing file:  data_red_ball/output_000422.png
+666.1194029850747 260.67910447761193
+processing file:  data_red_ball/output_000423.png
+649.6433121019109 252.03821656050957
+processing file:  data_red_ball/output_000424.png
+635.5540540540541 242.8581081081081
+processing file:  data_red_ball/output_000425.png
+621.0845070422536 234.33802816901408
+processing file:  data_red_ball/output_000426.png
+606.8613138686131 225.98540145985402
+processing file:  data_red_ball/output_000427.png
+592.5114503816794 217.48091603053436
+processing file:  data_red_ball/output_000428.png
+579.4045801526718 209.3969465648855
+processing file:  data_red_ball/output_000429.png
+566.1153846153846 201.22307692307692
+processing file:  data_red_ball/output_000430.png
+552.5966386554621 193.41176470588235
+processing file:  data_red_ball/output_000431.png
+538.92 185.376
+processing file:  data_red_ball/output_000432.png
+525.5263157894736 177.3684210526316
+processing file:  data_red_ball/output_000433.png
+512.6691729323309 169.69172932330827
+processing file:  data_red_ball/output_000434.png
+499.327731092437 161.69747899159663
+processing file:  data_red_ball/output_000435.png
+486.1885245901639 153.89344262295083
+processing file:  data_red_ball/output_000436.png
+473.2977099236641 146.35114503816794
+processing file:  data_red_ball/output_000437.png
+460.95384615384614 138.93076923076924
+processing file:  data_red_ball/output_000438.png
+448.05645161290323 131.31451612903226
+processing file:  data_red_ball/output_000439.png
+435.3050847457627 123.62711864406779
+processing file:  data_red_ball/output_000440.png
+422.71311475409834 116.12295081967213
+processing file:  data_red_ball/output_000441.png
+410.89516129032256 109.19354838709677
+processing file:  data_red_ball/output_000442.png
+398.38709677419354 101.7741935483871
+processing file:  data_red_ball/output_000443.png
+386.14285714285717 94.30252100840336
+processing file:  data_red_ball/output_000444.png
+374.3363636363636 87.10909090909091
+processing file:  data_red_ball/output_000445.png
+362.50442477876106 79.93805309734513
+processing file:  data_red_ball/output_000446.png
+351.13793103448273 73.25862068965517
+processing file:  data_red_ball/output_000447.png
+339.16153846153844 66.08461538461539
+processing file:  data_red_ball/output_000448.png
+328.42148760330576 59.603305785123965
+processing file:  data_red_ball/output_000449.png
+317.9428571428571 53.333333333333336
+processing file:  data_red_ball/output_000450.png
+307.8378378378378 47.549549549549546
+processing file:  data_red_ball/output_000451.png
+298.0091743119266 41.642201834862384
+processing file:  data_red_ball/output_000452.png
+288.2695652173913 35.66086956521739
+processing file:  data_red_ball/output_000453.png
+278.3137254901961 30.823529411764707
+processing file:  data_red_ball/output_000454.png
+268.0561797752809 29.359550561797754
+processing file:  data_red_ball/output_000455.png
+258.5729166666667 30.072916666666668
+processing file:  data_red_ball/output_000456.png
+250.22641509433961 32.735849056603776
+processing file:  data_red_ball/output_000457.png
+243.1150442477876 37.203539823008846
+processing file:  data_red_ball/output_000458.png
+237.4695652173913 42.91304347826087
+processing file:  data_red_ball/output_000459.png
+233.33050847457628 49.67796610169491
+processing file:  data_red_ball/output_000460.png
+230.31451612903226 57.70967741935484
+processing file:  data_red_ball/output_000461.png
+229.725 66.34166666666667
+processing file:  data_red_ball/output_000462.png
+229.7479674796748 75.1951219512195
+processing file:  data_red_ball/output_000463.png
+229.77777777777777 83.94871794871794
+processing file:  data_red_ball/output_000464.png
+229.7563025210084 92.53781512605042
+processing file:  data_red_ball/output_000465.png
+229.5948275862069 101.63793103448276
+processing file:  data_red_ball/output_000466.png
+229.69421487603304 111.09917355371901
+processing file:  data_red_ball/output_000467.png
+229.8846153846154 121.41538461538461
+processing file:  data_red_ball/output_000468.png
+229.89147286821705 131.8294573643411
+processing file:  data_red_ball/output_000469.png
+230.13138686131387 142.42335766423358
+processing file:  data_red_ball/output_000470.png
+230.1294964028777 153.3453237410072
+processing file:  data_red_ball/output_000471.png
+230.0530303030303 164.28030303030303
+processing file:  data_red_ball/output_000472.png
+229.89312977099237 175.3206106870229
+processing file:  data_red_ball/output_000473.png
+230.0 186.76377952755905
+processing file:  data_red_ball/output_000474.png
+229.89705882352942 198.35294117647058
+processing file:  data_red_ball/output_000475.png
+229.77037037037036 209.8962962962963
+processing file:  data_red_ball/output_000476.png
+229.82142857142858 221.75
+processing file:  data_red_ball/output_000477.png
+229.7972027972028 233.93706293706293
+processing file:  data_red_ball/output_000478.png
+229.71323529411765 245.9191176470588
+processing file:  data_red_ball/output_000479.png
+229.47407407407408 258.52592592592595
+processing file:  data_red_ball/output_000480.png
+229.61764705882354 270.59558823529414
+processing file:  data_red_ball/output_000481.png
+229.54861111111111 283.40277777777777
+processing file:  data_red_ball/output_000482.png
+229.67105263157896 296.1644736842105
+processing file:  data_red_ball/output_000483.png
+228.9855072463768 308.5652173913044
+processing file:  data_red_ball/output_000484.png
+228.5985401459854 320.22627737226276
+processing file:  data_red_ball/output_000485.png
+228.54285714285714 332.24285714285713
+processing file:  data_red_ball/output_000486.png
+228.53191489361703 344.290780141844
+processing file:  data_red_ball/output_000487.png
+228.68243243243242 356.88513513513516
+processing file:  data_red_ball/output_000488.png
+230.3202614379085 369.62091503267976
+processing file:  data_red_ball/output_000489.png
+233.15436241610738 381.3758389261745
+processing file:  data_red_ball/output_000490.png
+237.25874125874125 393.1818181818182
+processing file:  data_red_ball/output_000491.png
+242.30882352941177 403.88235294117646
+processing file:  data_red_ball/output_000492.png
+248.58955223880596 414.0074626865672
+processing file:  data_red_ball/output_000493.png
+255.96376811594203 423.77536231884056
+processing file:  data_red_ball/output_000494.png
+264.39230769230767 432.1923076923077
+processing file:  data_red_ball/output_000495.png
+273.58015267175574 439.91603053435114
+processing file:  data_red_ball/output_000496.png
+283.51145038167937 446.8320610687023
+processing file:  data_red_ball/output_000497.png
+293.6666666666667 452.5982905982906
+processing file:  data_red_ball/output_000498.png
+303.7264957264957 458.22222222222223
+processing file:  data_red_ball/output_000499.png
+312.91964285714283 463.42857142857144
+processing file:  data_red_ball/output_000500.png
+322.9316239316239 469.22222222222223
+processing file:  data_red_ball/output_000501.png
+333.5691056910569 475.4308943089431
+processing file:  data_red_ball/output_000502.png
+343.45 481.2083333333333
+processing file:  data_red_ball/output_000503.png
+353.28205128205127 487.1025641025641
+processing file:  data_red_ball/output_000504.png
+363.3909090909091 493.07272727272726
+processing file:  data_red_ball/output_000505.png
+373.3644859813084 498.97196261682245
+processing file:  data_red_ball/output_000506.png
+383.53913043478263 504.9217391304348
+processing file:  data_red_ball/output_000507.png
+393.7857142857143 510.6904761904762
+processing file:  data_red_ball/output_000508.png
+403.6434108527132 516.4883720930233
+processing file:  data_red_ball/output_000509.png
+413.232 522.272
+processing file:  data_red_ball/output_000510.png
+423.1570247933884 528.2314049586777
+processing file:  data_red_ball/output_000511.png
+433.0603448275862 534.2586206896551
+processing file:  data_red_ball/output_000512.png
+442.7903225806452 539.8870967741935
+processing file:  data_red_ball/output_000513.png
+452.7642276422764 545.6666666666666
+processing file:  data_red_ball/output_000514.png
+462.7857142857143 551.6269841269841
+processing file:  data_red_ball/output_000515.png
+472.73333333333335 557.425
+processing file:  data_red_ball/output_000516.png
+482.4568965517241 563.3534482758621
+processing file:  data_red_ball/output_000517.png
+492.0810810810811 569.1351351351351
+processing file:  data_red_ball/output_000518.png
+501.57894736842104 574.6491228070175
+processing file:  data_red_ball/output_000519.png
+511.495867768595 580.1900826446281
+processing file:  data_red_ball/output_000520.png
+520.7952755905512 585.9448818897638
+processing file:  data_red_ball/output_000521.png
+530.7142857142857 591.6904761904761
+processing file:  data_red_ball/output_000522.png
+540.0 597.2636363636364
+processing file:  data_red_ball/output_000523.png
+549.5046728971963 603.0560747663551
+processing file:  data_red_ball/output_000524.png
+558.3461538461538 608.3557692307693
+processing file:  data_red_ball/output_000525.png
+568.1101694915254 613.6355932203389
+processing file:  data_red_ball/output_000526.png
+576.75 619.1875
+processing file:  data_red_ball/output_000527.png
+585.8898305084746 624.3474576271186
+processing file:  data_red_ball/output_000528.png
+594.9421487603306 629.7107438016529
+processing file:  data_red_ball/output_000529.png
+604.0178571428571 635.3125
+processing file:  data_red_ball/output_000530.png
+612.1851851851852 640.074074074074
+processing file:  data_red_ball/output_000531.png
+619.6979166666666 644.75
+processing file:  data_red_ball/output_000532.png
+627.6822429906542 649.2523364485982
+processing file:  data_red_ball/output_000533.png
+635.0689655172414 653.5172413793103
+processing file:  data_red_ball/output_000534.png
+642.6693548387096 657.8548387096774
+processing file:  data_red_ball/output_000535.png
+650.3189655172414 662.8448275862069
+processing file:  data_red_ball/output_000536.png
+658.6363636363636 666.6818181818181
+processing file:  data_red_ball/output_000537.png
+666.6610169491526 669.7118644067797
+processing file:  data_red_ball/output_000538.png
+674.9019607843137 672.3823529411765
+processing file:  data_red_ball/output_000539.png
+683.1634615384615 674.4519230769231
+processing file:  data_red_ball/output_000540.png
+691.7065217391304 675.5217391304348
+processing file:  data_red_ball/output_000541.png
+700.06 676.1
+processing file:  data_red_ball/output_000542.png
+708.4782608695652 675.4521739130435
+processing file:  data_red_ball/output_000543.png
+716.2149532710281 674.8785046728972
+processing file:  data_red_ball/output_000544.png
+724.5779816513761 673.7247706422019
+processing file:  data_red_ball/output_000545.png
+732.6666666666666 671.6944444444445
+processing file:  data_red_ball/output_000546.png
+740.4622641509434 669.5943396226415
+processing file:  data_red_ball/output_000547.png
+748.4864864864865 666.6936936936937
+processing file:  data_red_ball/output_000548.png
+755.9711538461538 662.8461538461538
+processing file:  data_red_ball/output_000549.png
+763.3269230769231 658.8269230769231
+processing file:  data_red_ball/output_000550.png
+770.7884615384615 654.7019230769231
+processing file:  data_red_ball/output_000551.png
+778.2476190476191 650.2190476190476
+processing file:  data_red_ball/output_000552.png
+786.4122807017544 645.6929824561404
+processing file:  data_red_ball/output_000553.png
+795.792 640.416
+processing file:  data_red_ball/output_000554.png
+805.3923076923077 634.7384615384616
+processing file:  data_red_ball/output_000555.png
+816.6904761904761 628.5079365079365
+processing file:  data_red_ball/output_000556.png
+828.464 621.96
+processing file:  data_red_ball/output_000557.png
+840.5725806451613 615.3064516129032
+processing file:  data_red_ball/output_000558.png
+853.9772727272727 607.5909090909091
+processing file:  data_red_ball/output_000559.png
+868.2444444444444 599.5703703703704
+processing file:  data_red_ball/output_000560.png
+882.328 591.744
+processing file:  data_red_ball/output_000561.png
+897.5590551181102 583.2598425196851
+processing file:  data_red_ball/output_000562.png
+913.5714285714286 574.3571428571429
+processing file:  data_red_ball/output_000563.png
+929.9597315436241 564.9463087248322
+processing file:  data_red_ball/output_000564.png
+947.2569444444445 555.4930555555555
+processing file:  data_red_ball/output_000565.png
+965.64 545.28
+processing file:  data_red_ball/output_000566.png
+982.8300653594771 535.3986928104575
+processing file:  data_red_ball/output_000567.png
+999.4666666666667 525.4962962962964
+processing file:  data_red_ball/output_000568.png
+1019.5825242718447 516.1456310679612
+processing file:  data_red_ball/output_000569.png
+1040.7303370786517 512.5056179775281
+processing file:  data_red_ball/output_000570.png
+1062.1648351648353 512.3846153846154
+processing file:  data_red_ball/output_000571.png
+1082.5566037735848 517.1320754716982
+processing file:  data_red_ball/output_000572.png
+1103.064 525.104
+processing file:  data_red_ball/output_000573.png
+1118.592356687898 534.484076433121
+processing file:  data_red_ball/output_000574.png
+1134.6089743589744 545.3076923076923
+processing file:  data_red_ball/output_000575.png
+1150.6969696969697 554.5378787878788
+processing file:  data_red_ball/output_000576.png
+1165.4098360655737 563.0245901639345
+processing file:  data_red_ball/output_000577.png
+1179.192 571.28
+processing file:  data_red_ball/output_000578.png
+1191.8951612903227 579.0967741935484
+processing file:  data_red_ball/output_000579.png
+1204.648854961832 586.7938931297709
+processing file:  data_red_ball/output_000580.png
+1216.5046728971963 593.8878504672897
+processing file:  data_red_ball/output_000581.png
+1228.685950413223 601.0413223140496
+processing file:  data_red_ball/output_000582.png
+1239.60162601626 607.7154471544716
+processing file:  data_red_ball/output_000583.png
+1250.8 614.2454545454545
+processing file:  data_red_ball/output_000584.png
+1261.2589285714287 620.7857142857143
+processing file:  data_red_ball/output_000585.png
+1271.5045045045044 626.7567567567568
+processing file:  data_red_ball/output_000586.png
+1281.2233009708739 632.3106796116505
+processing file:  data_red_ball/output_000587.png
+1290.8333333333333 637.9907407407408
+processing file:  data_red_ball/output_000588.png
+1299.6542056074766 643.5700934579439
+processing file:  data_red_ball/output_000589.png
+1307.8854166666667 648.0104166666666
+processing file:  data_red_ball/output_000590.png
+1315.020618556701 652.2989690721649
+processing file:  data_red_ball/output_000591.png
+1321.5567010309278 656.2268041237113
+processing file:  data_red_ball/output_000592.png
+1327.8021978021977 660.1868131868132
+processing file:  data_red_ball/output_000593.png
+1333.8461538461538 663.9120879120879
+processing file:  data_red_ball/output_000594.png
+1339.3488372093022 667.1279069767442
+processing file:  data_red_ball/output_000595.png
+1344.2674418604652 670.3023255813954
+processing file:  data_red_ball/output_000596.png
+1348.97 674.69
+processing file:  data_red_ball/output_000597.png
+1352.352380952381 679.152380952381
+processing file:  data_red_ball/output_000598.png
+1354.85 683.52
+processing file:  data_red_ball/output_000599.png
+1356.6923076923076 687.875
+processing file:  data_red_ball/output_000600.png
+1357.96 692.34
+processing file:  data_red_ball/output_000601.png
+1358.381443298969 696.6494845360825
+processing file:  data_red_ball/output_000602.png
+1358.5217391304348 700.8586956521739
+processing file:  data_red_ball/output_000603.png
+1358.1935483870968 705.0430107526881
+processing file:  data_red_ball/output_000604.png
+1357.127659574468 709.063829787234
+processing file:  data_red_ball/output_000605.png
+1355.6236559139784 713.2258064516129
+processing file:  data_red_ball/output_000606.png
+1353.6666666666667 717.1935483870968
+processing file:  data_red_ball/output_000607.png
+1350.8085106382978 721.1063829787234
+processing file:  data_red_ball/output_000608.png
+1347.632183908046 724.8735632183908
+processing file:  data_red_ball/output_000609.png
+1343.3953488372092 728.3488372093024
+processing file:  data_red_ball/output_000610.png
+1339.0752688172042 731.2258064516129
+processing file:  data_red_ball/output_000611.png
+1334.1458333333333 733.78125
+processing file:  data_red_ball/output_000612.png
+1329.298969072165 736.360824742268
+processing file:  data_red_ball/output_000613.png
+1324.0098039215686 739.1470588235294
+processing file:  data_red_ball/output_000614.png
+1318.2446808510638 742.0531914893617
+processing file:  data_red_ball/output_000615.png
+1312.2857142857142 745.4857142857143
+processing file:  data_red_ball/output_000616.png
+1305.7474747474748 749.0909090909091
+processing file:  data_red_ball/output_000617.png
+1298.368932038835 753.0873786407767
+processing file:  data_red_ball/output_000618.png
+1289.9320388349515 757.1747572815534
+processing file:  data_red_ball/output_000619.png
+1281.1759259259259 761.5462962962963
+processing file:  data_red_ball/output_000620.png
+1271.8440366972477 766.8715596330276
+processing file:  data_red_ball/output_000621.png
+1262.176 772.08
+processing file:  data_red_ball/output_000622.png
+1251.5378151260504 777.6890756302521
+processing file:  data_red_ball/output_000623.png
+1240.635593220339 783.5677966101695
+processing file:  data_red_ball/output_000624.png
+1229.8536585365853 789.5853658536586
+processing file:  data_red_ball/output_000625.png
+1218.1705426356589 795.922480620155
+processing file:  data_red_ball/output_000626.png
+1205.7414965986395 802.4897959183673
+processing file:  data_red_ball/output_000627.png
+1193.8148148148148 809.162962962963
+processing file:  data_red_ball/output_000628.png
+1180.623188405797 816.2028985507246
+processing file:  data_red_ball/output_000629.png
+1166.9402985074628 823.7537313432836
+processing file:  data_red_ball/output_000630.png
+1153.0287769784172 831.1942446043165
+processing file:  data_red_ball/output_000631.png
+1138.6 838.7571428571429
+processing file:  data_red_ball/output_000632.png
+1123.6785714285713 847.0
+processing file:  data_red_ball/output_000633.png
+1109.0985915492959 854.9507042253521
+processing file:  data_red_ball/output_000634.png
+1092.55 864.1285714285714
+processing file:  data_red_ball/output_000635.png
+1077.0839160839162 872.1888111888112
+processing file:  data_red_ball/output_000636.png
+1060.548872180451 881.7293233082706
+processing file:  data_red_ball/output_000637.png
+1043.2222222222222 890.6269841269841
+processing file:  data_red_ball/output_000638.png
+1026.0367647058824 900.1985294117648
+processing file:  data_red_ball/output_000639.png
+1008.530612244898 910.1224489795918
+processing file:  data_red_ball/output_000640.png
+991.7936507936508 919.3571428571429
+processing file:  data_red_ball/output_000641.png
+973.3161764705883 929.1029411764706
+processing file:  data_red_ball/output_000642.png
+954.9548872180451 939.609022556391
+processing file:  data_red_ball/output_000643.png
+936.3309352517986 950.2446043165468
+processing file:  data_red_ball/output_000644.png
+918.3722627737226 960.3795620437957
+processing file:  data_red_ball/output_000645.png
+900.4666666666667 970.8962962962963
+processing file:  data_red_ball/output_000646.png
+881.515923566879 981.0955414012739
+processing file:  data_red_ball/output_000647.png
+863.9389312977099 990.8702290076336
+processing file:  data_red_ball/output_000648.png
+845.7105263157895 998.140350877193
+processing file:  data_red_ball/output_000649.png
+826.8514851485148 1000.990099009901
+processing file:  data_red_ball/output_000650.png
+806.8125 1001.8571428571429
+processing file:  data_red_ball/output_000651.png
+788.2990654205607 998.2990654205607
+processing file:  data_red_ball/output_000652.png
+770.2131147540983 992.1967213114754
+processing file:  data_red_ball/output_000653.png
+754.0542635658915 984.6589147286821
+processing file:  data_red_ball/output_000654.png
+739.4732824427481 976.3664122137404
+processing file:  data_red_ball/output_000655.png
+723.1583333333333 971.4833333333333
+processing file:  data_red_ball/output_000656.png
+706.6666666666666 969.8558558558559
+processing file:  data_red_ball/output_000657.png
+689.7830188679245 970.3396226415094
+processing file:  data_red_ball/output_000658.png
+672.7881355932203 972.771186440678
+processing file:  data_red_ball/output_000659.png
+656.7739726027397 978.2465753424658
+processing file:  data_red_ball/output_000660.png
+641.9586206896552 984.4896551724138
+processing file:  data_red_ball/output_000661.png
+629.1176470588235 990.9477124183006
+processing file:  data_red_ball/output_000662.png
+616.7669172932331 997.4887218045113
+processing file:  data_red_ball/output_000663.png
+603.7049180327868 998.7704918032787
+processing file:  data_red_ball/output_000664.png
+590.0491803278688 1000.5983606557377
+processing file:  data_red_ball/output_000665.png
+577.5284552845528 1000.390243902439
+processing file:  data_red_ball/output_000666.png
+563.8347107438017 998.6280991735537
+processing file:  data_red_ball/output_000667.png
+551.4135338345865 995.1052631578947
+processing file:  data_red_ball/output_000668.png
+538.0944881889764 990.0629921259842
+processing file:  data_red_ball/output_000669.png
+527.0075187969925 984.0601503759399
+processing file:  data_red_ball/output_000670.png
+516.2582781456954 977.3708609271523
+processing file:  data_red_ball/output_000671.png
+506.25925925925924 969.5123456790124
+processing file:  data_red_ball/output_000672.png
+497.6503067484663 960.6257668711656
+processing file:  data_red_ball/output_000673.png
+489.93382352941177 951.1176470588235
+processing file:  data_red_ball/output_000674.png
+484.3795620437956 941.3138686131387
+processing file:  data_red_ball/output_000675.png
+478.8943661971831 930.1619718309859
+processing file:  data_red_ball/output_000676.png
+475.1811594202899 919.2898550724638
+processing file:  data_red_ball/output_000677.png
+472.72972972972974 907.8243243243244
+processing file:  data_red_ball/output_000678.png
+471.42483660130716 896.0653594771242
+processing file:  data_red_ball/output_000679.png
+471.219298245614 887.8245614035088
+processing file:  data_red_ball/output_000680.png
+471.93700787401576 880.0393700787401
+processing file:  data_red_ball/output_000681.png
+471.81954887218046 871.8721804511279
+processing file:  data_red_ball/output_000682.png
+473.7709923664122 862.9694656488549
+processing file:  data_red_ball/output_000683.png
+475.62698412698415 854.5
+processing file:  data_red_ball/output_000684.png
+478.3606557377049 846.2704918032787
+processing file:  data_red_ball/output_000685.png
+482.1639344262295 837.8852459016393
+processing file:  data_red_ball/output_000686.png
+486.41984732824426 829.6259541984733
+processing file:  data_red_ball/output_000687.png
+491.0735294117647 821.6985294117648
+processing file:  data_red_ball/output_000688.png
+497.10869565217394 813.8260869565217
+processing file:  data_red_ball/output_000689.png
+503.46043165467626 806.9208633093525
+processing file:  data_red_ball/output_000690.png
+510.4850746268657 800.1716417910447
+processing file:  data_red_ball/output_000691.png
+518.162962962963 794.1185185185185
+processing file:  data_red_ball/output_000692.png
+526.8913043478261 788.3188405797101
+processing file:  data_red_ball/output_000693.png
+535.0695652173913 784.7391304347826
+processing file:  data_red_ball/output_000694.png
+542.7295081967213 779.8852459016393
+processing file:  data_red_ball/output_000695.png
+551.7107438016529 776.9669421487604
+processing file:  data_red_ball/output_000696.png
+559.5169491525423 774.2372881355932
+processing file:  data_red_ball/output_000697.png
+568.6851851851852 772.175925925926
+processing file:  data_red_ball/output_000698.png
+577.5555555555555 770.7870370370371
+processing file:  data_red_ball/output_000699.png
+585.843137254902 770.5588235294117
+processing file:  data_red_ball/output_000700.png
+594.2424242424242 770.6969696969697
+processing file:  data_red_ball/output_000701.png
+603.5420560747664 771.5981308411215
+processing file:  data_red_ball/output_000702.png
+612.070707070707 772.939393939394
+processing file:  data_red_ball/output_000703.png
+620.3725490196078 775.3823529411765
+processing file:  data_red_ball/output_000704.png
+628.7263157894737 778.3894736842105
+processing file:  data_red_ball/output_000705.png
+636.8761061946902 781.5929203539823
+processing file:  data_red_ball/output_000706.png
+644.1826086956522 785.7217391304348
+processing file:  data_red_ball/output_000707.png
+651.6893203883495 790.1359223300971
+processing file:  data_red_ball/output_000708.png
+658.6936936936937 795.1171171171171
+processing file:  data_red_ball/output_000709.png
+665.1929824561404 799.8771929824561
+processing file:  data_red_ball/output_000710.png
+671.4375 805.7410714285714
+processing file:  data_red_ball/output_000711.png
+676.9454545454546 811.7727272727273
+processing file:  data_red_ball/output_000712.png
+681.9272727272727 817.9727272727273
+processing file:  data_red_ball/output_000713.png
+686.2149532710281 824.7009345794393
+processing file:  data_red_ball/output_000714.png
+690.3272727272728 831.6909090909091
+processing file:  data_red_ball/output_000715.png
+693.7657657657658 838.6936936936937
+processing file:  data_red_ball/output_000716.png
+696.5438596491229 845.8333333333334
+processing file:  data_red_ball/output_000717.png
+698.6134453781513 853.2857142857143
+processing file:  data_red_ball/output_000718.png
+700.7731092436975 860.6218487394958
+processing file:  data_red_ball/output_000719.png
+701.6481481481482 867.7592592592592
+processing file:  data_red_ball/output_000720.png
+702.5897435897435 875.1623931623932
+processing file:  data_red_ball/output_000721.png
+702.4095238095238 881.8857142857142
+processing file:  data_red_ball/output_000722.png
+700.8369565217391 886.2173913043479
+processing file:  data_red_ball/output_000723.png
+700.9080459770115 889.8275862068965
+processing file:  data_red_ball/output_000724.png
+701.8 893.4666666666667
+processing file:  data_red_ball/output_000725.png
+700.9888888888889 897.2777777777778
+processing file:  data_red_ball/output_000726.png
+699.978021978022 900.9010989010989
+processing file:  data_red_ball/output_000727.png
+698.7790697674419 904.1860465116279
+processing file:  data_red_ball/output_000728.png
+697.4408602150538 907.3010752688172
+processing file:  data_red_ball/output_000729.png
+695.8586956521739 910.0108695652174
+processing file:  data_red_ball/output_000730.png
+694.3763440860215 912.4086021505376
+processing file:  data_red_ball/output_000731.png
+692.5227272727273 914.6363636363636
+processing file:  data_red_ball/output_000732.png
+690.5632183908046 916.3333333333334
+processing file:  data_red_ball/output_000733.png
+688.9879518072289 918.1325301204819
+processing file:  data_red_ball/output_000734.png
+687.0919540229885 919.8390804597701
+processing file:  data_red_ball/output_000735.png
+684.9888888888889 920.8111111111111
+processing file:  data_red_ball/output_000736.png
+682.7142857142857 922.6428571428571
+processing file:  data_red_ball/output_000737.png
+680.4891304347826 923.5217391304348
+processing file:  data_red_ball/output_000738.png
+678.2823529411764 924.7294117647059
+processing file:  data_red_ball/output_000739.png
+675.4130434782609 925.2391304347826
+processing file:  data_red_ball/output_000740.png
+672.439024390244 926.4268292682926
+processing file:  data_red_ball/output_000741.png
+669.0833333333334 926.9404761904761
+processing file:  data_red_ball/output_000742.png
+665.5057471264367 927.1724137931035
+processing file:  data_red_ball/output_000743.png
+661.8720930232558 926.8720930232558
+processing file:  data_red_ball/output_000744.png
+657.695652173913 925.8695652173913
+processing file:  data_red_ball/output_000745.png
+653.2098765432099 924.5308641975308
+processing file:  data_red_ball/output_000746.png
+649.0120481927711 922.4939759036145
+processing file:  data_red_ball/output_000747.png
+644.9638554216867 920.4457831325301
+processing file:  data_red_ball/output_000748.png
+640.7741935483871 917.3763440860215
+processing file:  data_red_ball/output_000749.png
+637.0309278350516 913.9072164948453
+processing file:  data_red_ball/output_000750.png
+632.9117647058823 911.6470588235294
+processing file:  data_red_ball/output_000751.png
+628.0674157303371 910.3370786516854
+processing file:  data_red_ball/output_000752.png
+624.1555555555556 908.8
+processing file:  data_red_ball/output_000753.png
+620.0631578947368 907.0947368421052
+processing file:  data_red_ball/output_000754.png
+616.4583333333334 905.8333333333334
+processing file:  data_red_ball/output_000755.png
+612.936170212766 904.3404255319149
+processing file:  data_red_ball/output_000756.png
+608.9569892473119 902.2795698924731
+processing file:  data_red_ball/output_000757.png
+604.125 899.875
+processing file:  data_red_ball/output_000758.png
+599.3118279569892 897.8387096774194
+processing file:  data_red_ball/output_000759.png
+594.1304347826087 895.5108695652174
+processing file:  data_red_ball/output_000760.png
+589.0581395348837 893.7790697674419
+processing file:  data_red_ball/output_000761.png
+584.1041666666666 891.4375
+processing file:  data_red_ball/output_000762.png
+579.4408602150538 889.1397849462365
+processing file:  data_red_ball/output_000763.png
+574.4772727272727 887.0454545454545
+processing file:  data_red_ball/output_000764.png
+570.0117647058823 884.9411764705883
+processing file:  data_red_ball/output_000765.png
+565.0 882.7159090909091
+processing file:  data_red_ball/output_000766.png
+560.6463414634146 880.5365853658536
+processing file:  data_red_ball/output_000767.png
+557.6867469879518 879.8674698795181
+processing file:  data_red_ball/output_000768.png
+556.7948717948718 879.7307692307693
+processing file:  data_red_ball/output_000769.png
+558.3478260869565 881.1739130434783
+processing file:  data_red_ball/output_000770.png
+560.5978260869565 883.1304347826087
+processing file:  data_red_ball/output_000771.png
+562.8604651162791 885.0232558139535
+processing file:  data_red_ball/output_000772.png
+565.283950617284 886.6296296296297
+processing file:  data_red_ball/output_000773.png
+567.3253012048193 888.3614457831326
+processing file:  data_red_ball/output_000774.png
+569.5555555555555 890.0617283950618
+processing file:  data_red_ball/output_000775.png
+571.7530864197531 891.9135802469136
+processing file:  data_red_ball/output_000776.png
+573.797619047619 893.1309523809524
+processing file:  data_red_ball/output_000777.png
+576.0114942528736 894.9655172413793
+processing file:  data_red_ball/output_000778.png
+578.035294117647 896.8235294117648
+processing file:  data_red_ball/output_000779.png
+580.1139240506329 898.5189873417721
+processing file:  data_red_ball/output_000780.png
+582.3291139240506 900.126582278481
+processing file:  data_red_ball/output_000781.png
+584.3139534883721 901.7441860465116
+processing file:  data_red_ball/output_000782.png
+586.314606741573 903.0112359550562
+processing file:  data_red_ball/output_000783.png
+588.546511627907 904.9186046511628
+processing file:  data_red_ball/output_000784.png
+590.5595238095239 906.6547619047619
+processing file:  data_red_ball/output_000785.png
+592.7954545454545 907.8977272727273
+processing file:  data_red_ball/output_000786.png
+595.0744680851063 909.436170212766
+processing file:  data_red_ball/output_000787.png
+597.4831460674158 911.123595505618
+processing file:  data_red_ball/output_000788.png
+599.5925925925926 912.679012345679
+processing file:  data_red_ball/output_000789.png
+601.9883720930233 912.7790697674419
+processing file:  data_red_ball/output_000790.png
+602.8933333333333 912.0933333333334
+processing file:  data_red_ball/output_000791.png
+603.8333333333334 911.1309523809524
+processing file:  data_red_ball/output_000792.png
+603.8765432098766 910.358024691358
+processing file:  data_red_ball/output_000793.png
+604.5176470588235 909.0
+processing file:  data_red_ball/output_000794.png
+604.6623376623377 908.4545454545455
+processing file:  data_red_ball/output_000795.png
+605.2317073170732 907.5365853658536
+processing file:  data_red_ball/output_000796.png
+605.775 906.775
+processing file:  data_red_ball/output_000797.png
+605.675 905.8875
+processing file:  data_red_ball/output_000798.png
+606.8571428571429 905.297619047619
+processing file:  data_red_ball/output_000799.png
+607.4084507042254 904.5774647887324
+processing file:  data_red_ball/output_000800.png
+607.8630136986301 903.7945205479452
+processing file:  data_red_ball/output_000801.png
+608.0853658536586 902.9512195121952
+processing file:  data_red_ball/output_000802.png
+608.506329113924 902.3037974683544
+processing file:  data_red_ball/output_000803.png
+609.0666666666667 901.4533333333334
+processing file:  data_red_ball/output_000804.png
+609.5058823529412 900.9411764705883
+processing file:  data_red_ball/output_000805.png
+610.1527777777778 900.1527777777778
+processing file:  data_red_ball/output_000806.png
+610.5180722891566 899.156626506024
+processing file:  data_red_ball/output_000807.png
+610.7215189873418 898.746835443038
+processing file:  data_red_ball/output_000808.png
+611.1666666666666 897.75
+processing file:  data_red_ball/output_000809.png
+611.8333333333334 896.7820512820513
+processing file:  data_red_ball/output_000810.png
+612.4125 896.1875
+processing file:  data_red_ball/output_000811.png
+613.1728395061729 895.0987654320987
+processing file:  data_red_ball/output_000812.png
+613.4714285714285 894.6142857142858
+processing file:  data_red_ball/output_000813.png
+613.8481012658228 893.6835443037975
+processing file:  data_red_ball/output_000814.png
+614.8611111111111 892.4861111111111
+processing file:  data_red_ball/output_000815.png
+615.253164556962 891.9240506329114
+processing file:  data_red_ball/output_000816.png
+615.8101265822785 890.9620253164557
+processing file:  data_red_ball/output_000817.png
+616.0289855072464 890.2753623188406
+processing file:  data_red_ball/output_000818.png
+616.5802469135803 889.4320987654321
+processing file:  data_red_ball/output_000819.png
+616.9714285714285 888.4
+processing file:  data_red_ball/output_000820.png
+617.6447368421053 887.7763157894736
+processing file:  data_red_ball/output_000821.png
+617.8243243243244 886.9594594594595
+processing file:  data_red_ball/output_000822.png
+618.5 885.921052631579
+processing file:  data_red_ball/output_000823.png
+618.3466666666667 885.3333333333334
+processing file:  data_red_ball/output_000824.png
+617.9615384615385 884.9358974358975
+processing file:  data_red_ball/output_000825.png
+617.6944444444445 884.9166666666666
+processing file:  data_red_ball/output_000826.png
+617.8805970149253 884.7910447761194
+processing file:  data_red_ball/output_000827.png
+617.3188405797101 884.5652173913044
+processing file:  data_red_ball/output_000828.png
+617.2112676056338 884.3239436619718
+processing file:  data_red_ball/output_000829.png
+617.1756756756756 884.1081081081081
+processing file:  data_red_ball/output_000830.png
+616.9487179487179 883.8717948717949
+processing file:  data_red_ball/output_000831.png
+616.9733333333334 883.9066666666666
+processing file:  data_red_ball/output_000832.png
+617.2702702702703 884.0945945945946
+processing file:  data_red_ball/output_000833.png
+617.1643835616438 884.2328767123288
+processing file:  data_red_ball/output_000834.png
+617.2083333333334 884.4027777777778
+processing file:  data_red_ball/output_000835.png
+617.1044776119403 884.5970149253732
+processing file:  data_red_ball/output_000836.png
+617.7846153846153 884.7076923076924
+processing file:  data_red_ball/output_000837.png
+617.6176470588235 884.7794117647059
+processing file:  data_red_ball/output_000838.png
+617.6585365853658 885.0731707317074
+processing file:  data_red_ball/output_000839.png
+617.7534246575342 885.1232876712329
+processing file:  data_red_ball/output_000840.png
+618.2602739726027 885.3835616438356
+processing file:  data_red_ball/output_000841.png
+618.6794871794872 885.9871794871794
+processing file:  data_red_ball/output_000842.png
+618.75 886.078947368421
+processing file:  data_red_ball/output_000843.png
+618.9 886.0
+processing file:  data_red_ball/output_000844.png
+618.6578947368421 885.9736842105264
+processing file:  data_red_ball/output_000845.png
+618.4177215189874 886.1518987341772
+processing file:  data_red_ball/output_000846.png
+618.8142857142857 886.2571428571429
+processing file:  data_red_ball/output_000847.png
+618.8630136986301 886.0958904109589
+processing file:  data_red_ball/output_000848.png
+618.9861111111111 885.6805555555555
+processing file:  data_red_ball/output_000849.png
+618.9078947368421 885.1447368421053
+processing file:  data_red_ball/output_000850.png
+618.9589041095891 885.1506849315068
+processing file:  data_red_ball/output_000851.png
+619.027397260274 886.1232876712329
+processing file:  data_red_ball/output_000852.png
+618.972602739726 886.1917808219179
+processing file:  data_red_ball/output_000853.png
+619.16 885.92
+processing file:  data_red_ball/output_000854.png
+618.8472222222222 885.2083333333334
+processing file:  data_red_ball/output_000855.png
+618.7733333333333 885.4533333333334
+processing file:  data_red_ball/output_000856.png
+619.027397260274 886.027397260274
+processing file:  data_red_ball/output_000857.png
+618.8611111111111 885.9861111111111
+processing file:  data_red_ball/output_000858.png
+618.931506849315 885.6575342465753
+processing file:  data_red_ball/output_000859.png
+618.987012987013 884.8701298701299
+processing file:  data_red_ball/output_000860.png
+619.054794520548 884.6986301369863
+processing file:  data_red_ball/output_000861.png
+618.9589041095891 885.1780821917808
+processing file:  data_red_ball/output_000862.png
+619.027397260274 885.2328767123288
+processing file:  data_red_ball/output_000863.png
+619.075 885.0125
+processing file:  data_red_ball/output_000864.png
+619.0 884.7432432432432
+processing file:  data_red_ball/output_000865.png
+619.1428571428571 884.6714285714286
+processing file:  data_red_ball/output_000866.png
+618.8219178082192 884.7534246575342
+processing file:  data_red_ball/output_000867.png
+618.8219178082192 884.7534246575342
+processing file:  data_red_ball/output_000868.png
+619.3142857142857 884.6857142857143
+processing file:  data_red_ball/output_000869.png
+619.3714285714286 884.7714285714286
+processing file:  data_red_ball/output_000870.png
+619.304347826087 884.7826086956521
+processing file:  data_red_ball/output_000871.png
+619.304347826087 884.7826086956521
+processing file:  data_red_ball/output_000872.png
+619.0958904109589 884.1506849315068
+processing file:  data_red_ball/output_000873.png
+619.1184210526316 883.2368421052631
+processing file:  data_red_ball/output_000874.png
+619.4266666666666 882.8133333333334
+processing file:  data_red_ball/output_000875.png
+619.5384615384615 882.8461538461538
+processing file:  data_red_ball/output_000876.png
+619.5189873417721 882.9746835443038
+processing file:  data_red_ball/output_000877.png
+619.8356164383562 882.8767123287671
+processing file:  data_red_ball/output_000878.png
+619.830985915493 882.887323943662
+processing file:  data_red_ball/output_000879.png
+619.9324324324324 882.4864864864865
+processing file:  data_red_ball/output_000880.png
+619.9473684210526 882.3947368421053
+processing file:  data_red_ball/output_000881.png
+619.8356164383562 882.6164383561644
+processing file:  data_red_ball/output_000882.png
+619.8028169014085 882.7323943661971
+[1515.13698630137, 1515.4142857142858, 1515.4285714285713, 1515.4027777777778, 1515.338028169014, 1515.3661971830986, 1515.2957746478874, 1515.263888888889, 1515.2777777777778, 1515.2702702702702, 1515.4202898550725, 1515.4571428571428, 1515.4794520547946, 1515.25, 1515.281690140845, 1515.2602739726028, 1515.2533333333333, 1515.025, 1515.179487179487, 1515.2857142857142, 1515.7051282051282, 1515.7375, 1515.7435897435898, 1515.7051282051282, 1515.4556962025317, 1515.4634146341464, 1515.6951219512196, 1515.6265060240964, 1515.7926829268292, 1515.851851851852, 1515.7317073170732, 1515.625, 1515.270588235294, 1515.0581395348838, 1514.7333333333333, 1514.5934065934066, 1514.1063829787233, 1514.268817204301, 1514.3333333333333, 1514.0842105263157, 1514.09375, 1513.298969072165, 1512.54, 1511.6666666666667, 1510.3366336633662, 1510.2244897959183, 1510.5280898876404, 1510.4673913043478, 1510.3829787234042, 1510.0106382978724, 1510.268817204301, 1510.125, 1509.9333333333334, 1509.9550561797753, 1510.0, 1510.4719101123596, 1510.5, 1510.2886597938145, 1510.3157894736842, 1510.4505494505495, 1510.2680412371135, 1510.287234042553, 1510.5760869565217, 1510.6, 1511.0113636363637, 1510.4065934065934, 1510.0444444444445, 1509.4719101123596, 1508.5098039215686, 1507.032258064516, 1504.7291666666667, 1503.030303030303, 1500.4537037037037, 1496.6396396396397, 1491.4545454545455, 1485.525, 1478.8898305084747, 1471.0413223140497, 1463.1587301587301, 1454.671755725191, 1444.9057971014493, 1434.5886524822695, 1422.8357142857142, 1410.7591240875913, 1397.2121212121212, 1383.3525179856115, 1369.75, 1353.094890510949, 1337.6641221374045, 1320.6846153846154, 1302.7785714285715, 1286.0137931034483, 1268.9727891156463, 1247.6776859504132, 1226.3257575757575, 1208.2727272727273, 1185.2517482517483, 1164.9801324503312, 1142.087591240876, 1121.2248062015503, 1097.1978021978023, 1072.8048780487804, 1048.1463414634147, 1024.2736842105264, 1001.6764705882352, 983.1210191082803, 960.4635761589404, 942.0175438596491, 922.0727272727273, 903.6381578947369, 883.9097744360902, 865.3648648648649, 846.34, 829.1176470588235, 810.7594936708861, 792.6111111111111, 775.9090909090909, 759.7843137254902, 741.4955752212389, 721.8514851485148, 703.3737373737374, 684.5841584158416, 666.1194029850747, 649.6433121019109, 635.5540540540541, 621.0845070422536, 606.8613138686131, 592.5114503816794, 579.4045801526718, 566.1153846153846, 552.5966386554621, 538.92, 525.5263157894736, 512.6691729323309, 499.327731092437, 486.1885245901639, 473.2977099236641, 460.95384615384614, 448.05645161290323, 435.3050847457627, 422.71311475409834, 410.89516129032256, 398.38709677419354, 386.14285714285717, 374.3363636363636, 362.50442477876106, 351.13793103448273, 339.16153846153844, 328.42148760330576, 317.9428571428571, 307.8378378378378, 298.0091743119266, 288.2695652173913, 278.3137254901961, 268.0561797752809, 258.5729166666667, 250.22641509433961, 243.1150442477876, 237.4695652173913, 233.33050847457628, 230.31451612903226, 229.725, 229.7479674796748, 229.77777777777777, 229.7563025210084, 229.5948275862069, 229.69421487603304, 229.8846153846154, 229.89147286821705, 230.13138686131387, 230.1294964028777, 230.0530303030303, 229.89312977099237, 230.0, 229.89705882352942, 229.77037037037036, 229.82142857142858, 229.7972027972028, 229.71323529411765, 229.47407407407408, 229.61764705882354, 229.54861111111111, 229.67105263157896, 228.9855072463768, 228.5985401459854, 228.54285714285714, 228.53191489361703, 228.68243243243242, 230.3202614379085, 233.15436241610738, 237.25874125874125, 242.30882352941177, 248.58955223880596, 255.96376811594203, 264.39230769230767, 273.58015267175574, 283.51145038167937, 293.6666666666667, 303.7264957264957, 312.91964285714283, 322.9316239316239, 333.5691056910569, 343.45, 353.28205128205127, 363.3909090909091, 373.3644859813084, 383.53913043478263, 393.7857142857143, 403.6434108527132, 413.232, 423.1570247933884, 433.0603448275862, 442.7903225806452, 452.7642276422764, 462.7857142857143, 472.73333333333335, 482.4568965517241, 492.0810810810811, 501.57894736842104, 511.495867768595, 520.7952755905512, 530.7142857142857, 540.0, 549.5046728971963, 558.3461538461538, 568.1101694915254, 576.75, 585.8898305084746, 594.9421487603306, 604.0178571428571, 612.1851851851852, 619.6979166666666, 627.6822429906542, 635.0689655172414, 642.6693548387096, 650.3189655172414, 658.6363636363636, 666.6610169491526, 674.9019607843137, 683.1634615384615, 691.7065217391304, 700.06, 708.4782608695652, 716.2149532710281, 724.5779816513761, 732.6666666666666, 740.4622641509434, 748.4864864864865, 755.9711538461538, 763.3269230769231, 770.7884615384615, 778.2476190476191, 786.4122807017544, 795.792, 805.3923076923077, 816.6904761904761, 828.464, 840.5725806451613, 853.9772727272727, 868.2444444444444, 882.328, 897.5590551181102, 913.5714285714286, 929.9597315436241, 947.2569444444445, 965.64, 982.8300653594771, 999.4666666666667, 1019.5825242718447, 1040.7303370786517, 1062.1648351648353, 1082.5566037735848, 1103.064, 1118.592356687898, 1134.6089743589744, 1150.6969696969697, 1165.4098360655737, 1179.192, 1191.8951612903227, 1204.648854961832, 1216.5046728971963, 1228.685950413223, 1239.60162601626, 1250.8, 1261.2589285714287, 1271.5045045045044, 1281.2233009708739, 1290.8333333333333, 1299.6542056074766, 1307.8854166666667, 1315.020618556701, 1321.5567010309278, 1327.8021978021977, 1333.8461538461538, 1339.3488372093022, 1344.2674418604652, 1348.97, 1352.352380952381, 1354.85, 1356.6923076923076, 1357.96, 1358.381443298969, 1358.5217391304348, 1358.1935483870968, 1357.127659574468, 1355.6236559139784, 1353.6666666666667, 1350.8085106382978, 1347.632183908046, 1343.3953488372092, 1339.0752688172042, 1334.1458333333333, 1329.298969072165, 1324.0098039215686, 1318.2446808510638, 1312.2857142857142, 1305.7474747474748, 1298.368932038835, 1289.9320388349515, 1281.1759259259259, 1271.8440366972477, 1262.176, 1251.5378151260504, 1240.635593220339, 1229.8536585365853, 1218.1705426356589, 1205.7414965986395, 1193.8148148148148, 1180.623188405797, 1166.9402985074628, 1153.0287769784172, 1138.6, 1123.6785714285713, 1109.0985915492959, 1092.55, 1077.0839160839162, 1060.548872180451, 1043.2222222222222, 1026.0367647058824, 1008.530612244898, 991.7936507936508, 973.3161764705883, 954.9548872180451, 936.3309352517986, 918.3722627737226, 900.4666666666667, 881.515923566879, 863.9389312977099, 845.7105263157895, 826.8514851485148, 806.8125, 788.2990654205607, 770.2131147540983, 754.0542635658915, 739.4732824427481, 723.1583333333333, 706.6666666666666, 689.7830188679245, 672.7881355932203, 656.7739726027397, 641.9586206896552, 629.1176470588235, 616.7669172932331, 603.7049180327868, 590.0491803278688, 577.5284552845528, 563.8347107438017, 551.4135338345865, 538.0944881889764, 527.0075187969925, 516.2582781456954, 506.25925925925924, 497.6503067484663, 489.93382352941177, 484.3795620437956, 478.8943661971831, 475.1811594202899, 472.72972972972974, 471.42483660130716, 471.219298245614, 471.93700787401576, 471.81954887218046, 473.7709923664122, 475.62698412698415, 478.3606557377049, 482.1639344262295, 486.41984732824426, 491.0735294117647, 497.10869565217394, 503.46043165467626, 510.4850746268657, 518.162962962963, 526.8913043478261, 535.0695652173913, 542.7295081967213, 551.7107438016529, 559.5169491525423, 568.6851851851852, 577.5555555555555, 585.843137254902, 594.2424242424242, 603.5420560747664, 612.070707070707, 620.3725490196078, 628.7263157894737, 636.8761061946902, 644.1826086956522, 651.6893203883495, 658.6936936936937, 665.1929824561404, 671.4375, 676.9454545454546, 681.9272727272727, 686.2149532710281, 690.3272727272728, 693.7657657657658, 696.5438596491229, 698.6134453781513, 700.7731092436975, 701.6481481481482, 702.5897435897435, 702.4095238095238, 700.8369565217391, 700.9080459770115, 701.8, 700.9888888888889, 699.978021978022, 698.7790697674419, 697.4408602150538, 695.8586956521739, 694.3763440860215, 692.5227272727273, 690.5632183908046, 688.9879518072289, 687.0919540229885, 684.9888888888889, 682.7142857142857, 680.4891304347826, 678.2823529411764, 675.4130434782609, 672.439024390244, 669.0833333333334, 665.5057471264367, 661.8720930232558, 657.695652173913, 653.2098765432099, 649.0120481927711, 644.9638554216867, 640.7741935483871, 637.0309278350516, 632.9117647058823, 628.0674157303371, 624.1555555555556, 620.0631578947368, 616.4583333333334, 612.936170212766, 608.9569892473119, 604.125, 599.3118279569892, 594.1304347826087, 589.0581395348837, 584.1041666666666, 579.4408602150538, 574.4772727272727, 570.0117647058823, 565.0, 560.6463414634146, 557.6867469879518, 556.7948717948718, 558.3478260869565, 560.5978260869565, 562.8604651162791, 565.283950617284, 567.3253012048193, 569.5555555555555, 571.7530864197531, 573.797619047619, 576.0114942528736, 578.035294117647, 580.1139240506329, 582.3291139240506, 584.3139534883721, 586.314606741573, 588.546511627907, 590.5595238095239, 592.7954545454545, 595.0744680851063, 597.4831460674158, 599.5925925925926, 601.9883720930233, 602.8933333333333, 603.8333333333334, 603.8765432098766, 604.5176470588235, 604.6623376623377, 605.2317073170732, 605.775, 605.675, 606.8571428571429, 607.4084507042254, 607.8630136986301, 608.0853658536586, 608.506329113924, 609.0666666666667, 609.5058823529412, 610.1527777777778, 610.5180722891566, 610.7215189873418, 611.1666666666666, 611.8333333333334, 612.4125, 613.1728395061729, 613.4714285714285, 613.8481012658228, 614.8611111111111, 615.253164556962, 615.8101265822785, 616.0289855072464, 616.5802469135803, 616.9714285714285, 617.6447368421053, 617.8243243243244, 618.5, 618.3466666666667, 617.9615384615385, 617.6944444444445, 617.8805970149253, 617.3188405797101, 617.2112676056338, 617.1756756756756, 616.9487179487179, 616.9733333333334, 617.2702702702703, 617.1643835616438, 617.2083333333334, 617.1044776119403, 617.7846153846153, 617.6176470588235, 617.6585365853658, 617.7534246575342, 618.2602739726027, 618.6794871794872, 618.75, 618.9, 618.6578947368421, 618.4177215189874, 618.8142857142857, 618.8630136986301, 618.9861111111111, 618.9078947368421, 618.9589041095891, 619.027397260274, 618.972602739726, 619.16, 618.8472222222222, 618.7733333333333, 619.027397260274, 618.8611111111111, 618.931506849315, 618.987012987013, 619.054794520548, 618.9589041095891, 619.027397260274, 619.075, 619.0, 619.1428571428571, 618.8219178082192, 618.8219178082192, 619.3142857142857, 619.3714285714286, 619.304347826087, 619.304347826087, 619.0958904109589, 619.1184210526316, 619.4266666666666, 619.5384615384615, 619.5189873417721, 619.8356164383562, 619.830985915493, 619.9324324324324, 619.9473684210526, 619.8356164383562, 619.8028169014085] [347.67123287671234, 347.85714285714283, 347.9142857142857, 347.97222222222223, 347.92957746478874, 347.90140845070425, 347.6901408450704, 347.7361111111111, 347.75, 347.77027027027026, 347.7536231884058, 347.84285714285716, 347.8767123287671, 347.7916666666667, 347.77464788732397, 347.7671232876712, 347.82666666666665, 347.75, 347.84615384615387, 347.8051948051948, 347.93589743589746, 347.975, 347.9230769230769, 347.88461538461536, 347.7721518987342, 347.8536585365854, 347.8536585365854, 347.93975903614455, 347.9756097560976, 348.0740740740741, 347.8780487804878, 347.79545454545456, 347.63529411764705, 347.6046511627907, 347.46666666666664, 347.35164835164835, 347.0531914893617, 347.1290322580645, 347.18279569892474, 347.09473684210525, 347.1041666666667, 346.96907216494844, 346.64, 345.6041666666667, 344.83168316831683, 344.3265306122449, 343.438202247191, 343.39130434782606, 343.7659574468085, 343.8404255319149, 343.4301075268817, 343.0520833333333, 343.4222222222222, 343.685393258427, 343.46067415730334, 343.35955056179773, 343.5531914893617, 343.8659793814433, 343.4736842105263, 343.2637362637363, 343.45360824742266, 343.67021276595744, 343.1630434782609, 342.9684210526316, 343.39772727272725, 343.3626373626374, 343.0111111111111, 342.60674157303373, 342.52941176470586, 341.59139784946234, 340.6145833333333, 339.1010101010101, 337.19444444444446, 335.2072072072072, 333.1090909090909, 329.40833333333336, 326.08474576271186, 321.78512396694214, 317.07936507936506, 312.22137404580155, 307.07246376811594, 301.6666666666667, 295.39285714285717, 289.007299270073, 281.3787878787879, 274.1294964028777, 266.4513888888889, 257.53284671532845, 248.8091603053435, 239.5076923076923, 229.81428571428572, 220.5103448275862, 210.71428571428572, 199.11570247933884, 187.53787878787878, 177.1590909090909, 164.82517482517483, 153.3046357615894, 139.97080291970804, 128.5503875968992, 115.02197802197803, 110.40243902439025, 110.48780487804878, 115.32631578947368, 126.58823529411765, 137.10828025477707, 149.3774834437086, 159.53216374269005, 170.47878787878787, 180.90131578947367, 191.06015037593986, 201.18243243243242, 211.12, 220.56209150326796, 230.54430379746836, 239.93827160493828, 248.55844155844156, 257.47712418300654, 265.3893805309734, 268.35643564356434, 269.27272727272725, 266.029702970297, 260.67910447761193, 252.03821656050957, 242.8581081081081, 234.33802816901408, 225.98540145985402, 217.48091603053436, 209.3969465648855, 201.22307692307692, 193.41176470588235, 185.376, 177.3684210526316, 169.69172932330827, 161.69747899159663, 153.89344262295083, 146.35114503816794, 138.93076923076924, 131.31451612903226, 123.62711864406779, 116.12295081967213, 109.19354838709677, 101.7741935483871, 94.30252100840336, 87.10909090909091, 79.93805309734513, 73.25862068965517, 66.08461538461539, 59.603305785123965, 53.333333333333336, 47.549549549549546, 41.642201834862384, 35.66086956521739, 30.823529411764707, 29.359550561797754, 30.072916666666668, 32.735849056603776, 37.203539823008846, 42.91304347826087, 49.67796610169491, 57.70967741935484, 66.34166666666667, 75.1951219512195, 83.94871794871794, 92.53781512605042, 101.63793103448276, 111.09917355371901, 121.41538461538461, 131.8294573643411, 142.42335766423358, 153.3453237410072, 164.28030303030303, 175.3206106870229, 186.76377952755905, 198.35294117647058, 209.8962962962963, 221.75, 233.93706293706293, 245.9191176470588, 258.52592592592595, 270.59558823529414, 283.40277777777777, 296.1644736842105, 308.5652173913044, 320.22627737226276, 332.24285714285713, 344.290780141844, 356.88513513513516, 369.62091503267976, 381.3758389261745, 393.1818181818182, 403.88235294117646, 414.0074626865672, 423.77536231884056, 432.1923076923077, 439.91603053435114, 446.8320610687023, 452.5982905982906, 458.22222222222223, 463.42857142857144, 469.22222222222223, 475.4308943089431, 481.2083333333333, 487.1025641025641, 493.07272727272726, 498.97196261682245, 504.9217391304348, 510.6904761904762, 516.4883720930233, 522.272, 528.2314049586777, 534.2586206896551, 539.8870967741935, 545.6666666666666, 551.6269841269841, 557.425, 563.3534482758621, 569.1351351351351, 574.6491228070175, 580.1900826446281, 585.9448818897638, 591.6904761904761, 597.2636363636364, 603.0560747663551, 608.3557692307693, 613.6355932203389, 619.1875, 624.3474576271186, 629.7107438016529, 635.3125, 640.074074074074, 644.75, 649.2523364485982, 653.5172413793103, 657.8548387096774, 662.8448275862069, 666.6818181818181, 669.7118644067797, 672.3823529411765, 674.4519230769231, 675.5217391304348, 676.1, 675.4521739130435, 674.8785046728972, 673.7247706422019, 671.6944444444445, 669.5943396226415, 666.6936936936937, 662.8461538461538, 658.8269230769231, 654.7019230769231, 650.2190476190476, 645.6929824561404, 640.416, 634.7384615384616, 628.5079365079365, 621.96, 615.3064516129032, 607.5909090909091, 599.5703703703704, 591.744, 583.2598425196851, 574.3571428571429, 564.9463087248322, 555.4930555555555, 545.28, 535.3986928104575, 525.4962962962964, 516.1456310679612, 512.5056179775281, 512.3846153846154, 517.1320754716982, 525.104, 534.484076433121, 545.3076923076923, 554.5378787878788, 563.0245901639345, 571.28, 579.0967741935484, 586.7938931297709, 593.8878504672897, 601.0413223140496, 607.7154471544716, 614.2454545454545, 620.7857142857143, 626.7567567567568, 632.3106796116505, 637.9907407407408, 643.5700934579439, 648.0104166666666, 652.2989690721649, 656.2268041237113, 660.1868131868132, 663.9120879120879, 667.1279069767442, 670.3023255813954, 674.69, 679.152380952381, 683.52, 687.875, 692.34, 696.6494845360825, 700.8586956521739, 705.0430107526881, 709.063829787234, 713.2258064516129, 717.1935483870968, 721.1063829787234, 724.8735632183908, 728.3488372093024, 731.2258064516129, 733.78125, 736.360824742268, 739.1470588235294, 742.0531914893617, 745.4857142857143, 749.0909090909091, 753.0873786407767, 757.1747572815534, 761.5462962962963, 766.8715596330276, 772.08, 777.6890756302521, 783.5677966101695, 789.5853658536586, 795.922480620155, 802.4897959183673, 809.162962962963, 816.2028985507246, 823.7537313432836, 831.1942446043165, 838.7571428571429, 847.0, 854.9507042253521, 864.1285714285714, 872.1888111888112, 881.7293233082706, 890.6269841269841, 900.1985294117648, 910.1224489795918, 919.3571428571429, 929.1029411764706, 939.609022556391, 950.2446043165468, 960.3795620437957, 970.8962962962963, 981.0955414012739, 990.8702290076336, 998.140350877193, 1000.990099009901, 1001.8571428571429, 998.2990654205607, 992.1967213114754, 984.6589147286821, 976.3664122137404, 971.4833333333333, 969.8558558558559, 970.3396226415094, 972.771186440678, 978.2465753424658, 984.4896551724138, 990.9477124183006, 997.4887218045113, 998.7704918032787, 1000.5983606557377, 1000.390243902439, 998.6280991735537, 995.1052631578947, 990.0629921259842, 984.0601503759399, 977.3708609271523, 969.5123456790124, 960.6257668711656, 951.1176470588235, 941.3138686131387, 930.1619718309859, 919.2898550724638, 907.8243243243244, 896.0653594771242, 887.8245614035088, 880.0393700787401, 871.8721804511279, 862.9694656488549, 854.5, 846.2704918032787, 837.8852459016393, 829.6259541984733, 821.6985294117648, 813.8260869565217, 806.9208633093525, 800.1716417910447, 794.1185185185185, 788.3188405797101, 784.7391304347826, 779.8852459016393, 776.9669421487604, 774.2372881355932, 772.175925925926, 770.7870370370371, 770.5588235294117, 770.6969696969697, 771.5981308411215, 772.939393939394, 775.3823529411765, 778.3894736842105, 781.5929203539823, 785.7217391304348, 790.1359223300971, 795.1171171171171, 799.8771929824561, 805.7410714285714, 811.7727272727273, 817.9727272727273, 824.7009345794393, 831.6909090909091, 838.6936936936937, 845.8333333333334, 853.2857142857143, 860.6218487394958, 867.7592592592592, 875.1623931623932, 881.8857142857142, 886.2173913043479, 889.8275862068965, 893.4666666666667, 897.2777777777778, 900.9010989010989, 904.1860465116279, 907.3010752688172, 910.0108695652174, 912.4086021505376, 914.6363636363636, 916.3333333333334, 918.1325301204819, 919.8390804597701, 920.8111111111111, 922.6428571428571, 923.5217391304348, 924.7294117647059, 925.2391304347826, 926.4268292682926, 926.9404761904761, 927.1724137931035, 926.8720930232558, 925.8695652173913, 924.5308641975308, 922.4939759036145, 920.4457831325301, 917.3763440860215, 913.9072164948453, 911.6470588235294, 910.3370786516854, 908.8, 907.0947368421052, 905.8333333333334, 904.3404255319149, 902.2795698924731, 899.875, 897.8387096774194, 895.5108695652174, 893.7790697674419, 891.4375, 889.1397849462365, 887.0454545454545, 884.9411764705883, 882.7159090909091, 880.5365853658536, 879.8674698795181, 879.7307692307693, 881.1739130434783, 883.1304347826087, 885.0232558139535, 886.6296296296297, 888.3614457831326, 890.0617283950618, 891.9135802469136, 893.1309523809524, 894.9655172413793, 896.8235294117648, 898.5189873417721, 900.126582278481, 901.7441860465116, 903.0112359550562, 904.9186046511628, 906.6547619047619, 907.8977272727273, 909.436170212766, 911.123595505618, 912.679012345679, 912.7790697674419, 912.0933333333334, 911.1309523809524, 910.358024691358, 909.0, 908.4545454545455, 907.5365853658536, 906.775, 905.8875, 905.297619047619, 904.5774647887324, 903.7945205479452, 902.9512195121952, 902.3037974683544, 901.4533333333334, 900.9411764705883, 900.1527777777778, 899.156626506024, 898.746835443038, 897.75, 896.7820512820513, 896.1875, 895.0987654320987, 894.6142857142858, 893.6835443037975, 892.4861111111111, 891.9240506329114, 890.9620253164557, 890.2753623188406, 889.4320987654321, 888.4, 887.7763157894736, 886.9594594594595, 885.921052631579, 885.3333333333334, 884.9358974358975, 884.9166666666666, 884.7910447761194, 884.5652173913044, 884.3239436619718, 884.1081081081081, 883.8717948717949, 883.9066666666666, 884.0945945945946, 884.2328767123288, 884.4027777777778, 884.5970149253732, 884.7076923076924, 884.7794117647059, 885.0731707317074, 885.1232876712329, 885.3835616438356, 885.9871794871794, 886.078947368421, 886.0, 885.9736842105264, 886.1518987341772, 886.2571428571429, 886.0958904109589, 885.6805555555555, 885.1447368421053, 885.1506849315068, 886.1232876712329, 886.1917808219179, 885.92, 885.2083333333334, 885.4533333333334, 886.027397260274, 885.9861111111111, 885.6575342465753, 884.8701298701299, 884.6986301369863, 885.1780821917808, 885.2328767123288, 885.0125, 884.7432432432432, 884.6714285714286, 884.7534246575342, 884.7534246575342, 884.6857142857143, 884.7714285714286, 884.7826086956521, 884.7826086956521, 884.1506849315068, 883.2368421052631, 882.8133333333334, 882.8461538461538, 882.9746835443038, 882.8767123287671, 882.887323943662, 882.4864864864865, 882.3947368421053, 882.6164383561644, 882.7323943661971]
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">back</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;./data_red_ball/output_000001.png&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">back</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;matplotlib.collections.PathCollection at 0x11c3a4748&gt;</pre>
+</div>
+
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../images/06_marble_run/06_marble_run_finished_results_9_1.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span><span class="mi">883</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">t</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([300, 301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312,
+       313, 314, 315, 316, 317, 318, 319, 320, 321, 322, 323, 324, 325,
+       326, 327, 328, 329, 330, 331, 332, 333, 334, 335, 336, 337, 338,
+       339, 340, 341, 342, 343, 344, 345, 346, 347, 348, 349, 350, 351,
+       352, 353, 354, 355, 356, 357, 358, 359, 360, 361, 362, 363, 364,
+       365, 366, 367, 368, 369, 370, 371, 372, 373, 374, 375, 376, 377,
+       378, 379, 380, 381, 382, 383, 384, 385, 386, 387, 388, 389, 390,
+       391, 392, 393, 394, 395, 396, 397, 398, 399, 400, 401, 402, 403,
+       404, 405, 406, 407, 408, 409, 410, 411, 412, 413, 414, 415, 416,
+       417, 418, 419, 420, 421, 422, 423, 424, 425, 426, 427, 428, 429,
+       430, 431, 432, 433, 434, 435, 436, 437, 438, 439, 440, 441, 442,
+       443, 444, 445, 446, 447, 448, 449, 450, 451, 452, 453, 454, 455,
+       456, 457, 458, 459, 460, 461, 462, 463, 464, 465, 466, 467, 468,
+       469, 470, 471, 472, 473, 474, 475, 476, 477, 478, 479, 480, 481,
+       482, 483, 484, 485, 486, 487, 488, 489, 490, 491, 492, 493, 494,
+       495, 496, 497, 498, 499, 500, 501, 502, 503, 504, 505, 506, 507,
+       508, 509, 510, 511, 512, 513, 514, 515, 516, 517, 518, 519, 520,
+       521, 522, 523, 524, 525, 526, 527, 528, 529, 530, 531, 532, 533,
+       534, 535, 536, 537, 538, 539, 540, 541, 542, 543, 544, 545, 546,
+       547, 548, 549, 550, 551, 552, 553, 554, 555, 556, 557, 558, 559,
+       560, 561, 562, 563, 564, 565, 566, 567, 568, 569, 570, 571, 572,
+       573, 574, 575, 576, 577, 578, 579, 580, 581, 582, 583, 584, 585,
+       586, 587, 588, 589, 590, 591, 592, 593, 594, 595, 596, 597, 598,
+       599, 600, 601, 602, 603, 604, 605, 606, 607, 608, 609, 610, 611,
+       612, 613, 614, 615, 616, 617, 618, 619, 620, 621, 622, 623, 624,
+       625, 626, 627, 628, 629, 630, 631, 632, 633, 634, 635, 636, 637,
+       638, 639, 640, 641, 642, 643, 644, 645, 646, 647, 648, 649, 650,
+       651, 652, 653, 654, 655, 656, 657, 658, 659, 660, 661, 662, 663,
+       664, 665, 666, 667, 668, 669, 670, 671, 672, 673, 674, 675, 676,
+       677, 678, 679, 680, 681, 682, 683, 684, 685, 686, 687, 688, 689,
+       690, 691, 692, 693, 694, 695, 696, 697, 698, 699, 700, 701, 702,
+       703, 704, 705, 706, 707, 708, 709, 710, 711, 712, 713, 714, 715,
+       716, 717, 718, 719, 720, 721, 722, 723, 724, 725, 726, 727, 728,
+       729, 730, 731, 732, 733, 734, 735, 736, 737, 738, 739, 740, 741,
+       742, 743, 744, 745, 746, 747, 748, 749, 750, 751, 752, 753, 754,
+       755, 756, 757, 758, 759, 760, 761, 762, 763, 764, 765, 766, 767,
+       768, 769, 770, 771, 772, 773, 774, 775, 776, 777, 778, 779, 780,
+       781, 782, 783, 784, 785, 786, 787, 788, 789, 790, 791, 792, 793,
+       794, 795, 796, 797, 798, 799, 800, 801, 802, 803, 804, 805, 806,
+       807, 808, 809, 810, 811, 812, 813, 814, 815, 816, 817, 818, 819,
+       820, 821, 822, 823, 824, 825, 826, 827, 828, 829, 830, 831, 832,
+       833, 834, 835, 836, 837, 838, 839, 840, 841, 842, 843, 844, 845,
+       846, 847, 848, 849, 850, 851, 852, 853, 854, 855, 856, 857, 858,
+       859, 860, 861, 862, 863, 864, 865, 866, 867, 868, 869, 870, 871,
+       872, 873, 874, 875, 876, 877, 878, 879, 880, 881, 882])</pre>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">x</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;matplotlib.legend.Legend at 0x11c266e80&gt;</pre>
+</div>
+
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../images/06_marble_run/06_marble_run_finished_results_11_1.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">vx_raw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+<span class="n">vx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">vx_raw</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">/</span><span class="mi">10</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+<span class="n">vy_raw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+<span class="n">vy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">vy_raw</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">/</span><span class="mi">10</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">vx</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">vy</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&lt;matplotlib.lines.Line2D at 0x11c37b588&gt;]</pre>
+</div>
+
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../images/06_marble_run/06_marble_run_finished_results_13_1.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">-</span><span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">-</span><span class="n">y</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">s</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&lt;matplotlib.lines.Line2D at 0x15e9af0b8&gt;]</pre>
+</div>
+
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../images/06_marble_run/06_marble_run_finished_results_14_1.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ax_raw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">vx</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">ax_raw</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">/</span><span class="mi">10</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+<span class="n">ay_raw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">vy</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+<span class="n">ay</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">ay_raw</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">/</span><span class="mi">10</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">ax</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">ay</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">ax</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&lt;matplotlib.lines.Line2D at 0x156d53a90&gt;]</pre>
+</div>
+
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../images/06_marble_run/06_marble_run_finished_results_15_1.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib.gridspec</span> <span class="kn">import</span> <span class="n">GridSpec</span>
+<span class="n">file_index</span> <span class="o">=</span> <span class="mi">490</span>
+<span class="n">back</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;./data_red_ball/output_</span><span class="si">{:06d}</span><span class="s2">.png&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">file_index</span><span class="p">))</span>
+<span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">t</span> <span class="o">&gt;=</span> <span class="n">file_index</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">gs</span> <span class="o">=</span> <span class="n">GridSpec</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">[:</span><span class="n">index</span><span class="p">],</span><span class="n">v</span><span class="p">[:</span><span class="n">index</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">v</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">t</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;time /frame&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;velocity /(pixel/frame)&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">[:</span><span class="n">index</span><span class="p">],</span><span class="n">a</span><span class="p">[:</span><span class="n">index</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">a</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">t</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;time /frame&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;acceleration /(pixel/frame)&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[:,</span><span class="mi">1</span><span class="p">:])</span>
+<span class="n">axis</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+<span class="n">axis</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">back</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">back</span><span class="p">)</span><span class="o">*</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greys&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">[:</span><span class="n">index</span><span class="p">],</span><span class="n">y</span><span class="p">[:</span><span class="n">index</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+
+<span class="n">x_arrow_pos</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">+</span> <span class="n">vx</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">/</span> <span class="n">v</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">*</span><span class="mi">40</span>
+<span class="n">y_arrow_pos</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">+</span> <span class="n">vy</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">/</span> <span class="n">v</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">*</span><span class="mi">40</span>
+<span class="n">axis</span><span class="o">.</span><span class="n">arrow</span><span class="p">(</span><span class="n">x_arrow_pos</span><span class="p">,</span> <span class="n">y_arrow_pos</span><span class="p">,</span> <span class="mi">10</span><span class="o">*</span><span class="n">vx</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="mi">10</span><span class="o">*</span><span class="n">vy</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">x_arrow_pos</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">+</span> <span class="n">ax</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">/</span> <span class="n">a</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">*</span><span class="mi">40</span>
+<span class="n">y_arrow_pos</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">+</span> <span class="n">ay</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">/</span> <span class="n">a</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">*</span><span class="mi">40</span>
+<span class="n">axis</span><span class="o">.</span><span class="n">arrow</span><span class="p">(</span><span class="n">x_arrow_pos</span><span class="p">,</span> <span class="n">y_arrow_pos</span><span class="p">,</span> <span class="mi">100</span><span class="o">*</span><span class="n">ax</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="mi">100</span><span class="o">*</span><span class="n">ay</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">)</span>
+
+<span class="n">axis</span><span class="o">.</span><span class="n">add_artist</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">Circle</span><span class="p">((</span><span class="n">x</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">index</span><span class="p">]),</span> <span class="mi">40</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="../images/06_marble_run/06_marble_run_finished_results_16_0.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">annotate_write</span><span class="p">(</span><span class="n">file_index</span><span class="p">):</span>
+    <span class="n">back</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;./data_red_ball/output_</span><span class="si">{:06d}</span><span class="s2">.png&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">file_index</span><span class="p">))</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">t</span> <span class="o">&gt;=</span> <span class="n">file_index</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    
+    <span class="n">t_start</span> <span class="o">=</span> <span class="mi">350</span>
+    
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+    <span class="n">gs</span> <span class="o">=</span> <span class="n">GridSpec</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">[:</span><span class="n">index</span><span class="p">],</span><span class="n">v</span><span class="p">[:</span><span class="n">index</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">v</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">t</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;time /frame&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;velocity /(pixel/frame)&#39;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">[:</span><span class="n">index</span><span class="p">],</span><span class="n">a</span><span class="p">[:</span><span class="n">index</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">a</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">t</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;time /frame&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;acceleration /(pixel/frame^2)&#39;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[:,</span><span class="mi">1</span><span class="p">:])</span>
+    <span class="n">axis</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+    <span class="n">blend</span> <span class="o">=</span> <span class="mf">0.7</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">tanh</span><span class="p">((</span><span class="n">file_index</span><span class="o">-</span><span class="n">t_start</span><span class="o">+</span><span class="mi">20</span><span class="p">)</span><span class="o">*</span><span class="mf">0.2</span><span class="p">))</span><span class="o">/</span><span class="mf">2.</span> 
+    <span class="nb">print</span><span class="p">(</span><span class="n">blend</span><span class="p">)</span>
+    <span class="n">axis</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">back</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">back</span><span class="p">)</span><span class="o">*</span><span class="n">blend</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greys&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">file_index</span> <span class="o">&gt;</span> <span class="n">t_start</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">[:</span><span class="n">index</span><span class="p">],</span><span class="n">y</span><span class="p">[:</span><span class="n">index</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+
+        <span class="n">x_arrow_pos</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">+</span> <span class="n">vx</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">/</span> <span class="n">v</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">*</span><span class="mi">40</span>
+        <span class="n">y_arrow_pos</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">+</span> <span class="n">vy</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">/</span> <span class="n">v</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">*</span><span class="mi">40</span>
+        <span class="n">axis</span><span class="o">.</span><span class="n">arrow</span><span class="p">(</span><span class="n">x_arrow_pos</span><span class="p">,</span> <span class="n">y_arrow_pos</span><span class="p">,</span> <span class="mi">10</span><span class="o">*</span><span class="n">vx</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="mi">10</span><span class="o">*</span><span class="n">vy</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+        <span class="n">x_arrow_pos</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">+</span> <span class="n">ax</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">/</span> <span class="n">a</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">*</span><span class="mi">40</span>
+        <span class="n">y_arrow_pos</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">+</span> <span class="n">ay</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">/</span> <span class="n">a</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">*</span><span class="mi">40</span>
+        <span class="n">axis</span><span class="o">.</span><span class="n">arrow</span><span class="p">(</span><span class="n">x_arrow_pos</span><span class="p">,</span> <span class="n">y_arrow_pos</span><span class="p">,</span> <span class="mi">100</span><span class="o">*</span><span class="n">ax</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="mi">100</span><span class="o">*</span><span class="n">ay</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+        <span class="n">axis</span><span class="o">.</span><span class="n">add_artist</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">Circle</span><span class="p">((</span><span class="n">x</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">index</span><span class="p">]),</span> <span class="mi">40</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;./out/output_</span><span class="si">{:06d}</span><span class="s2">.png&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">file_index</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">annotate_write</span><span class="p">(</span><span class="mi">400</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>0.6999999999995159
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">t_index</span> <span class="ow">in</span> <span class="n">t</span><span class="p">:</span>
+    <span class="c1">#if t_index &gt; 300 and t_index &lt; 450 and t_index%10==0:</span>
+    <span class="n">annotate_write</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">t_index</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>4.3009222215451e-06
+6.416202603903853e-06
+9.571806359209844e-06
+1.4279361095936858e-05
+2.1302089830405044e-05
+3.177850809171212e-05
+4.740690473382658e-05
+7.072043573542741e-05
+0.0001054972506418228
+0.00015737173916329782
+0.00023474509132653806
+0.00035014077495568174
+0.0005222201836856732
+0.000778775223002226
+0.001161160756122087
+0.0017308362096443374
+0.0025789679296052024
+0.0038404092296152824
+0.0057137998072119165
+0.008489904488991966
+0.012590346973464082
+0.01861789550380609
+0.027416005957735034
+0.04012692312920811
+0.058220887545745635
+0.0834420454154823
+0.11758713040625283
+0.16203265155068763
+0.21701786321067126
+0.2809186379212836
+0.35
+0.4190813620787164
+0.4829821367893287
+0.5379673484493123
+0.582412869593747
+0.6165579545845177
+0.6417791124542543
+0.6598730768707919
+0.6725839940422649
+0.6813821044961939
+0.6874096530265359
+0.691510095511008
+0.6942862001927881
+0.6961595907703847
+0.6974210320703947
+0.6982691637903556
+0.6988388392438779
+0.6992212247769978
+0.6994777798163143
+0.6996498592250442
+0.6997652549086735
+0.6998426282608367
+0.699894502749358
+0.6999292795642645
+0.6999525930952661
+0.6999682214919082
+0.6999786979101695
+0.6999857206389041
+0.6999904281936408
+0.6999935837973961
+0.6999956990777784
+0.6999971169997786
+0.6999980674645349
+0.699998704581559
+0.6999991316545212
+0.6999994179303806
+0.699999609826959
+0.6999997384591411
+0.6999998246838979
+0.6999998824820926
+0.6999999212253865
+0.6999999471957955
+0.6999999646042823
+0.6999999762735404
+0.6999999840956784
+0.6999999893390143
+0.6999999928537276
+0.6999999952097103
+0.6999999967889727
+0.699999997847584
+0.6999999985571924
+0.6999999990328571
+0.6999999993517048
+0.6999999995654347
+0.6999999997087021
+0.6999999998047371
+0.6999999998691114
+0.6999999999122628
+0.6999999999411879
+0.699999999960577
+0.699999999973574
+0.6999999999822861
+0.699999999988126
+0.6999999999920407
+0.6999999999946647
+0.6999999999964236
+0.6999999999976027
+0.6999999999983929
+0.6999999999989228
+0.6999999999992779
+0.6999999999995159
+0.6999999999996755
+0.6999999999997825
+0.6999999999998542
+0.6999999999999021
+0.6999999999999345
+0.6999999999999561
+0.6999999999999705
+0.6999999999999802
+0.6999999999999867
+0.6999999999999911
+0.6999999999999941
+0.699999999999996
+0.6999999999999973
+0.6999999999999982
+0.6999999999999987
+0.6999999999999992
+0.6999999999999994
+0.6999999999999996
+0.6999999999999997
+0.6999999999999998
+0.6999999999999998
+0.6999999999999998
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+0.7
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+ 
+
+
+    </main>
+    
+            </div>
+            <div class="c-textbook__footer" id="textbook_footer">
+              
+<nav class="c-page__nav">
+  
+    
+    
+
+    <a id="js-page__nav__prev" class="c-page__nav__prev" href="/06_marble_run/06_image_processing.html">
+      〈 <span class="u-margin-right-tiny"></span> Image Processing
+    </a>
+  
+
+  
+    
+
+    
+    <a id="js-page__nav__next" class="c-page__nav__next" href="">
+       <span class="u-margin-right-tiny"></span> 〉
+    </a>
+  
+</nav>
+
+              <footer>
+  <p class="footer">This page was created by <a href="https://github.com/jupyter/jupyter-book/graphs/contributors">The Jupyter Book Community</a></p>
+</footer>
+
+            </div>
+
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

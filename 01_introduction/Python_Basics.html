@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,minimum-scale=1">
+
+  <title>Python Basics</title>
+  <meta name="description" content="        Python Basics                 Data Analysis with Python         Winter Semester 2018/2019        Lukas Arnold and Max Böhler                         ...">
+
+  <link rel="canonical" href="http://Data_Analysis.com//01_introduction/Python_Basics.html">
+  <link rel="alternate" type="application/rss+xml" title="Data Analysis with Python" href="http://Data_Analysis.com//feed.xml">
+
+  <meta property="og:url"         content="http://Data_Analysis.com//01_introduction/Python_Basics.html" />
+<meta property="og:type"        content="article" />
+<meta property="og:title"       content="Python Basics" />
+<meta property="og:description" content="        Python Basics                 Data Analysis with Python         Winter Semester 2018/2019        Lukas Arnold and Max Böhler                         ..." />
+<meta property="og:image"       content="http://data_analysis.com/images/logo/logo.png" />
+
+<meta name="twitter:card" content="summary">
+
+
+  <script type="application/ld+json">
+  {
+  "@context": "http://schema.org",
+  "@type": "NewsArticle",
+  "mainEntityOfPage": "http://Data_Analysis.com//01_introduction/Python_Basics.html",
+  "headline": "Python Basics",
+  "datePublished": "2019-12-18T15:27:01+01:00",
+  "dateModified": "2019-12-18T15:27:01+01:00",
+  "description": "        Python Basics                 Data Analysis with Python         Winter Semester 2018/2019        Lukas Arnold and Max Böhler                         ...",
+  "author": {
+    "@type": "Person",
+    "name": "Prof. Dr. Lukas Arnold"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Data 100 at UC Berkeley",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://Data_Analysis.com/",
+      "width": 60,
+      "height": 60
+    }
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "http://Data_Analysis.com/",
+    "height": 60,
+    "width": 60
+  }
+}
+
+  </script>
+  <link rel="stylesheet" href="/assets/css/styles.css">
+
+  <!-- <link rel="manifest" href="/manifest.json"> -->
+  <!-- <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#efae0a"> -->
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+  <meta name="theme-color" content="#233947">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="/images/logo/favicon.ico">
+
+  <!-- MathJax Config -->
+  <!-- Allow inline math using $ and automatically break long math lines -->
+<!-- (mostly) copied from nbconvert configuration -->
+<!-- https://github.com/jupyter/nbconvert/blob/master/nbconvert/templates/html/mathjax.tpl -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+        processEscapes: true,
+        processEnvironments: true
+    },
+    // Center justify equations in code and markdown cells. Elsewhere
+    // we use CSS to left justify single line equations in code cells.
+    displayAlign: 'center',
+    "HTML-CSS": {
+        styles: {'.MathJax_Display': {"margin": 0}},
+        linebreaks: { automatic: true },
+    },
+    
+});
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS_HTML' async></script>
+
+
+  <!-- DOM updating function -->
+  <script src="/assets/js/page/dom-update.js"></script>
+
+  <!-- Selectors for elements on the page -->
+  <script src="/assets/js/page/documentSelectors.js"></script>
+
+  <!-- Define some javascript variables that will be useful in other javascript -->
+  <script>
+    const site_basename = '/';
+  </script>
+
+  <!-- Add AnchorJS to let headers be linked -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.0/anchor.min.js" async></script>
+  <script src="/assets/js/page/anchors.js" async></script>
+
+  <!-- Include Turbolinks to make page loads fast -->
+  <!-- https://github.com/turbolinks/turbolinks -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/turbolinks/5.2.0/turbolinks.js" async></script>
+  <meta name="turbolinks-cache-control" content="no-cache">
+
+  <!-- Load nbinteract for widgets -->
+  
+
+  <!-- Load Thebelab for interactive widgets -->
+  <!-- Include Thebelab for interactive code if it's enabled -->
+
+
+<!-- Display Thebelab button in each code cell -->
+<script>
+/**
+ * Set up thebelab button for code blocks
+ */
+
+const thebelabCellButton = id =>
+  `<a id="thebelab-cell-button-${id}" class="btn thebebtn o-tooltip--left" data-tooltip="Interactive Mode">
+    <img src="/assets/images/edit-button.svg" alt="Start thebelab interactive mode">
+  </a>`
+
+
+const addThebelabButtonToCodeCells =  () => {
+
+  const codeCells = document.querySelectorAll('div.input_area > div.highlight:not(.output) pre')
+  codeCells.forEach((codeCell, index) => {
+    const id = codeCellId(index)
+    codeCell.setAttribute('id', id)
+    if (document.getElementById("thebelab-cell-button-" + id) == null) {
+      codeCell.insertAdjacentHTML('afterend', thebelabCellButton(id));
+    }
+  })
+}
+
+initFunction(addThebelabButtonToCodeCells);
+</script>
+
+
+<script src="https://unpkg.com/thebelab@latest/lib/index.js" async></script>
+<script>
+    /**
+     * Add attributes to Thebelab blocks
+     */
+
+    const initThebelab = () => {
+        const addThebelabToCodeCells = () => {
+            console.log("Adding thebelab to code cells...");
+            // If Thebelab hasn't loaded, wait a bit and try again. This
+            // happens because we load ClipboardJS asynchronously.
+            if (window.thebelab === undefined) {
+                setTimeout(addThebelabToCodeCells, 250)
+            return
+            }
+
+            // If we already detect a Thebelab cell, don't re-run
+            if (document.querySelectorAll('div.thebelab-cell').length > 0) {
+                return;
+            }
+
+            // Find all code cells, replace with Thebelab interactive code cells
+            const codeCells = document.querySelectorAll('.input_area pre')
+            codeCells.forEach((codeCell, index) => {
+                const id = codeCellId(index)
+
+                // Clean up the language to make it work w/ CodeMirror and add it to the cell
+                dataLanguage = ""
+                dataLanguage = detectLanguage(dataLanguage);
+                codeCell.setAttribute('data-language', dataLanguage)
+                codeCell.setAttribute('data-executable', 'true')
+
+                // If the code cell is hidden, show it
+                var inputCheckbox = document.querySelector(`input#hidebtn${codeCell.id}`);
+                if (inputCheckbox !== null) {
+                    setCodeCellVisibility(inputCheckbox, 'visible');
+                }
+            });
+
+            // Remove the event listener from the page so keyboard press doesn't
+            // Change page
+            document.removeEventListener('keydown', initPageNav)
+            keyboardListener = false;
+
+            // Init thebelab
+            thebelab.bootstrap();
+
+            // Remove copy buttons since they won't work anymore
+            const copyAndThebeButtons = document.querySelectorAll('.copybtn, .thebebtn')
+            copyAndThebeButtons.forEach((button, index) => {
+                button.remove();
+            });
+
+            // Remove outputs since they'll be stale
+            const outputs = document.querySelectorAll('.output *, .output')
+            outputs.forEach((output, index) => {
+                output.remove();
+            });
+
+            // Find any cells with an initialization tag and ask ThebeLab to run them when ready
+            var thebeInitCells = document.querySelectorAll('div.tag_thebelab-init');
+            thebeInitCells.forEach((cell) => {
+                console.log("Initializing ThebeLab with cell: " + cell.id);
+                cell.querySelector('.thebelab-run-button').click();
+            });
+        }
+
+        // Add event listener for the function to modify code cells
+        const thebelabButtons = document.querySelectorAll('[id^=thebelab], [id$=thebelab]')
+        thebelabButtons.forEach((thebelabButton,index) => {
+            if (thebelabButton === null) {
+                setTimeout(initThebelab, 250)
+                return
+            };
+            thebelabButton.addEventListener('click', addThebelabToCodeCells);
+        });
+    }
+
+    // Initialize Thebelab
+    initFunction(initThebelab);
+
+// Helper function to munge the language name
+var detectLanguage = (language) => {
+    if (language.indexOf('python') > -1) {
+        language = "python";
+    }
+    return language;
+}
+</script>
+
+
+
+  <!-- Load the auto-generating TOC (non-async otherwise the TOC won't load w/ turbolinks) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.8.1/tocbot.min.js" async></script>
+  <script src="/assets/js/page/tocbot.js"></script>
+
+  <!-- Google analytics -->
+  
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', '');
+</script>
+
+
+
+  <!-- Clipboard copy button -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" async></script>
+
+  <!-- Load custom website scripts -->
+  <script src="/assets/js/scripts.js" async></script>
+
+  <!-- Load custom user CSS and JS  -->
+  <script src="/assets/custom/custom.js" async></script>
+  <link rel="stylesheet" href="/assets/custom/custom.css">
+
+  <!-- Update interact links w/ REST param, is defined in includes so we can use templates -->
+  
+
+  <!-- Lunr search code - will only be executed on the /search page -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.6/lunr.min.js" async></script>
+  <script>var initQuery = function() {
+  // See if we have a search box
+  var searchInput = document.querySelector('input#lunr_search');
+  if (searchInput === null) {
+    return;
+  }
+
+  // Function to parse our lunr cache
+  var idx = lunr(function () {
+    this.field('title')
+    this.field('excerpt')
+    this.field('categories')
+    this.field('tags')
+    this.ref('id')
+
+    this.pipeline.remove(lunr.trimmer)
+
+    for (var item in store) {
+      this.add({
+        title: store[item].title,
+        excerpt: store[item].excerpt,
+        categories: store[item].categories,
+        tags: store[item].tags,
+        id: item
+      })
+    }
+  });
+
+  // Run search upon keyup
+  searchInput.addEventListener('keyup', function () {
+    var resultdiv = document.querySelector('#results');
+    var query = document.querySelector("input#lunr_search").value.toLowerCase();
+    var result =
+      idx.query(function (q) {
+        query.split(lunr.tokenizer.separator).forEach(function (term) {
+          q.term(term, { boost: 100 })
+          if(query.lastIndexOf(" ") != query.length-1){
+            q.term(term, {  usePipeline: false, wildcard: lunr.Query.wildcard.TRAILING, boost: 10 })
+          }
+          if (term != ""){
+            q.term(term, {  usePipeline: false, editDistance: 1, boost: 1 })
+          }
+        })
+      });
+
+      // Empty the results div
+      while (resultdiv.firstChild) {
+        resultdiv.removeChild(resultdiv.firstChild);
+      }
+
+    resultdiv.insertAdjacentHTML('afterbegin', '<p class="results__found">'+result.length+' Result(s) found</p>');
+    for (var item in result) {
+      var ref = result[item].ref;
+      if(store[ref].teaser){
+        var searchitem =
+          '<div class="list__item">'+
+            '<article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">'+
+              '<h2 class="archive__item-title" itemprop="headline">'+
+                '<a href="'+store[ref].url+'" rel="permalink">'+store[ref].title+'</a>'+
+              '</h2>'+
+              '<div class="archive__item-teaser">'+
+                '<img src="'+store[ref].teaser+'" alt="">'+
+              '</div>'+
+              '<p class="archive__item-excerpt" itemprop="description">'+store[ref].excerpt.split(" ").splice(0,20).join(" ")+'...</p>'+
+            '</article>'+
+          '</div>';
+      }
+      else{
+    	  var searchitem =
+          '<div class="list__item">'+
+            '<article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">'+
+              '<h2 class="archive__item-title" itemprop="headline">'+
+                '<a href="'+store[ref].url+'" rel="permalink">'+store[ref].title+'</a>'+
+              '</h2>'+
+              '<p class="archive__item-excerpt" itemprop="description">'+store[ref].excerpt.split(" ").splice(0,20).join(" ")+'...</p>'+
+            '</article>'+
+          '</div>';
+      }
+      resultdiv.insertAdjacentHTML('beforeend', searchitem);
+    }
+  });
+};
+
+initFunction(initQuery);
+</script>
+
+  <!-- Load JS that depends on site variables -->
+  <script src="/assets/js/page/copy-button.js" async></script>
+
+  <!-- Hide cell code -->
+  <script src="/assets/js/page/hide-cell.js" async></script>
+
+  <!-- Printing the screen -->
+  <!-- Include nbinteract for interactive widgets -->
+<script src="https://printjs-4de6.kxcdn.com/print.min.js" async></script>
+<script>
+printContent = () => {
+    // MathJax displays a second version of any math for assistive devices etc.
+    // This prevents double-rendering in the PDF output.
+    var ignoreAssistList = [];
+    assistives = document.querySelectorAll('.MathJax_Display span.MJX_Assistive_MathML').forEach((element, index) => {
+        var thisId = 'MathJax-assistive-' + index.toString();
+        element.setAttribute('id', thisId);
+        ignoreAssistList.push(thisId)
+    });
+
+    // Print the actual content object
+    printJS({
+        printable: 'textbook_content',
+        type: 'html',
+        css: "/assets/css/styles.css",
+        style: "#textbook_content {padding-top: 40px};",
+        scanStyles: false,
+        targetStyles: ["*"],
+        ignoreElements: ignoreAssistList,
+        documentTitle: "Made with Jupyter Book"
+    })
+};
+
+initPrint = () => {
+    document.querySelector('#interact-button-print').addEventListener('click', printContent)
+}
+
+initFunction(initPrint)
+</script>
+
+</head>
+
+  <body>
+    <!-- Include the ThebeLab config so it gets reloaded on each page -->
+    <script type="text/x-thebe-config">{
+    requestKernel: true,
+    binderOptions: {
+    repo: "YOUR-ORG/YOUR-REPO",
+    ref: "gh-pages",
+    },
+    codeMirrorConfig: {
+    theme: "abcdef",
+    mode: "python"
+    },
+    kernelOptions: {
+    kernelName: "python3",
+    path: "content/01_introduction"
+    }
+}
+</script>
+
+    <!-- .js-show-sidebar shows sidebar by default -->
+    <div id="js-textbook" class="c-textbook js-show-sidebar">
+      
+
+
+
+<nav id="js-sidebar" class="c-textbook__sidebar">
+  <a href="None"><img src="/images/logo/logo.png" class="textbook_logo" id="sidebar-logo" alt="textbook logo" data-turbolinks-permanent/></a>
+  <h2 class="c-sidebar__title">Data Analysis with Python</h2>
+  <ul class="c-sidebar__chapters">
+    
+      
+      
+        <li><h2 class="c-sidebar__title">ToC</li>
+        
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter" data-url="/01_introduction/Python_Basics">
+        <a class="c-sidebar__entry"
+          href="/01_introduction/Python_Basics.html"
+        >
+          
+            1.
+          
+          Python Basics
+        </a>
+      </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
+
+      
+    
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter" data-url="/02_flow_control/02_flow_control">
+        <a class="c-sidebar__entry"
+          href="/02_flow_control/02_flow_control.html"
+        >
+          
+            2.
+          
+          Flow Control
+        </a>
+      </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
+        
+
+        
+
+        <ul class="c-sidebar__sections u-hidden-visually">
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/02_flow_control/02_flow_control_solution">
+              <a class="c-sidebar__entry"
+                href="/02_flow_control/02_flow_control_solution.html"
+              >
+                
+                  2.1
+                
+                Solutions
+              </a>
+            </li>
+            
+            
+          
+        </ul>
+      
+
+      
+    
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter" data-url="/03_matplotlib/03_matplotlib_basics">
+        <a class="c-sidebar__entry"
+          href="/03_matplotlib/03_matplotlib_basics.html"
+        >
+          
+            3.
+          
+          Matplotlib
+        </a>
+      </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
+        
+
+        
+
+        <ul class="c-sidebar__sections u-hidden-visually">
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/03_matplotlib/03_matplotlib_basics_solution">
+              <a class="c-sidebar__entry"
+                href="/03_matplotlib/03_matplotlib_basics_solution.html"
+              >
+                
+                  3.1
+                
+                Solutions
+              </a>
+            </li>
+            
+            
+          
+        </ul>
+      
+
+      
+    
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter" data-url="/04_numpy/04_numpy_basics">
+        <a class="c-sidebar__entry"
+          href="/04_numpy/04_numpy_basics.html"
+        >
+          
+            4.
+          
+          Numpy
+        </a>
+      </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
+        
+
+        
+
+        <ul class="c-sidebar__sections u-hidden-visually">
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/04_numpy/04_numpy_basics_solution">
+              <a class="c-sidebar__entry"
+                href="/04_numpy/04_numpy_basics_solution.html"
+              >
+                
+                  4.1
+                
+                Solutions
+              </a>
+            </li>
+            
+            
+          
+        </ul>
+      
+
+      
+    
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter" data-url="/05_optimisation/05_data_optimization">
+        <a class="c-sidebar__entry"
+          href="/05_optimisation/05_data_optimization.html"
+        >
+          
+            5.
+          
+          Optimization
+        </a>
+      </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
+        
+
+        
+
+        <ul class="c-sidebar__sections u-hidden-visually">
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/05_optimisation/05_data_optimization_solution">
+              <a class="c-sidebar__entry"
+                href="/05_optimisation/05_data_optimization_solution.html"
+              >
+                
+                  5.1
+                
+                Solutions
+              </a>
+            </li>
+            
+            
+          
+        </ul>
+      
+
+      
+    
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter" data-url="/06_marble_run/06_image_processing">
+        <a class="c-sidebar__entry"
+          href="/06_marble_run/06_image_processing.html"
+        >
+          
+            6.
+          
+          Image Processing
+        </a>
+      </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
+        
+
+        
+
+        <ul class="c-sidebar__sections u-hidden-visually">
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/06_marble_run/06_image_processing">
+              <a class="c-sidebar__entry"
+                href="/06_marble_run/06_image_processing.html"
+              >
+                
+                  6.1
+                
+                Image Processing
+              </a>
+            </li>
+            
+            
+          
+            
+            
+
+            
+            
+            
+            
+
+            <li class="c-sidebar__section" data-url="/06_marble_run/06_marble_run_finished_results">
+              <a class="c-sidebar__entry"
+                href="/06_marble_run/06_marble_run_finished_results.html"
+              >
+                
+                  6.2
+                
+                Marble Run
+              </a>
+            </li>
+            
+            
+          
+        </ul>
+      
+
+      
+    
+      
+      
+        <li class="c-sidebar__divider"></li>
+        
+      
+      
+
+      
+      
+      
+      
+
+      
+      
+      <li class="c-sidebar__chapter" data-url="https://github.com/jupyter/jupyter-book">
+        <a class="c-sidebar__entry"
+          href="https://github.com/jupyter/jupyter-book"
+        >
+          
+          GitHub repository
+        </a>
+      </li>
+
+      
+      
+
+      
+
+      
+      
+
+      
+
+      
+    
+  </ul>
+  <p class="sidebar_footer">Powered by <a href="https://jupyterbook.org">Jupyter Book</a></p>
+</nav>
+
+      
+      <div class="c-topbar" id="top-navbar">
+  <!-- We show the sidebar by default so we use .is-active -->
+  <div class="c-topbar__buttons">
+    <button
+      id="js-sidebar-toggle"
+      class="hamburger hamburger--arrowalt is-active"
+    >
+      <span class="hamburger-box">
+        <span class="hamburger-inner"></span>
+      </span>
+    </button>
+    <div class="buttons">
+<div class="download-buttons-dropdown">
+    <button id="dropdown-button-trigger" class="interact-button"><img src="/assets/images/download-solid.svg" alt="Download" /></button>
+    <div class="download-buttons">
+        <a href="/content/01_introduction/Python_Basics.ipynb" download>
+        <button id="interact-button-download" class="interact-button">.ipynb</button>
+        </a>
+        
+        <a id="interact-button-print"><button id="interact-button-download" class="interact-button">.pdf</button></a>
+    </div>
+</div>
+
+
+  <button id="interact-button-thebelab" class="interact-button">Thebelab</button>
+
+  
+  
+  
+
+
+</div>
+
+  </div>
+  <!-- Empty sidebar placeholder that we'll auto-fill with javascript -->
+  <aside class="sidebar__right">
+    <header><h4 class="nav__title"><img src="/assets/images/list-solid.svg" alt="Search" />   On this page</h4></header>
+    <nav class="onthispage">
+    </nav>
+  </aside>
+  <a href="/search.html" class="topbar-right-button" id="search-button">
+    <img src="/assets/images/search-solid.svg" alt="Search" />
+  </a>
+</div>
+
+      <main class="c-textbook__page" tabindex="-1">
+            <div class="c-textbook__content" id="textbook_content">
+                  <main class="jupyter-page">
+    <div id="page-info"><div id="page-title">Python Basics</div>
+</div>
+    <div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div style="width: 100%; overflow: hidden;">
+    <div style="width: 500px; float: left;"> 
+        <h1>Data Analysis with Python</h1> <br>
+        <b>Winter Semester 2018/2019</b><br>
+        <b>Lukas Arnold and Max Böhler</b>
+    </div>
+    <div style="float:right;"> 
+        <img src="images/fzj_logo.png" style="width:150px;"/>
+        <img src="images/buw_logo.png" style="width:150px;"/>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="About-Lukas-Arnold">About Lukas Arnold<a class="anchor-link" href="#About-Lukas-Arnold"> </a></h3><ul>
+<li>physicist, diploma and PhD on computational physics at Ruhr-University Bochum</li>
+<li>current position: Head of 'Fire Dynamics' division at the Institute of Advanced Simulation at the Forschungszentrum Jülich</li>
+<li>webpage [old one]: <a href="https://www.fz-juelich.de/SharedDocs/Personen/IAS/JSC/EN/staff/arnold_l.html?nn=361682">https://www.fz-juelich.de/SharedDocs/Personen/IAS/JSC/EN/staff/arnold_l.html?nn=361682</a></li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Idea-of-the-'Data-Analysis-with-Python'-course">Idea of the 'Data Analysis with Python' course<a class="anchor-link" href="#Idea-of-the-'Data-Analysis-with-Python'-course"> </a></h2><h3 id="Motivation">Motivation<a class="anchor-link" href="#Motivation"> </a></h3><ul>
+<li>often the capturing of data is presented and the results are discussed</li>
+<li>the results do not just come out of the aparatus or the simulation, but involve (massive) post-processing of the raw data</li>
+<li>this course shall close the gap</li>
+</ul>
+<h3 id="Goals">Goals<a class="anchor-link" href="#Goals"> </a></h3><ul>
+<li>focus lies on getting YOU started to be able to do analysis by YOURSELF (of eventually YOUR data)</li>
+<li>no deep introduction into analysis methods, but focus on how to work with them in Python</li>
+<li>Max and I will only guide you, but you have to work by yourselfs [this doesn't mean you have to work alone, so team up!]</li>
+</ul>
+<h3 id="Disclaimer">Disclaimer<a class="anchor-link" href="#Disclaimer"> </a></h3><ul>
+<li>we will not provide any/an extensive documentation, all you need is already in the internet and we help you to find it – and yes, you have to read documentations during the excercises</li>
+<li>this course is a new concept, open for everybody and taught the first time by us: please help us to make it better, by constructive feedback and be patient with us debugging the exercises ;-)</li>
+<li>this course is meant for beginners, if you are an expert: stay and give it a try to do advanced analysis!</li>
+<li>this course will grant you no credit points, if you see benefit for students to participate, we will try to include it in future accreditations</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Jupyter">Jupyter<a class="anchor-link" href="#Jupyter"> </a></h1><p>Jupyter is a web-based environment for interactive execution of python code.</p>
+<p>Webpage: <a href="http://jupyter.org">http://jupyter.org</a></p>
+<p>While Jupyter runs a server on your computer (or eventually is run somewhere else) you create Jupyter notebooks which include your Python code and inline visualisation and your documentation.</p>
+<p>Basics infos about notebooks:</p>
+<ul>
+<li>execution is done on a cell basis</li>
+<li>arbitrary order of execution</li>
+<li>two cell types: code and text</li>
+<li>execute current cell: control-enter</li>
+<li>execute current cell and move down to next one: shift-enter</li>
+<li>see help for other keyboard shortcuts</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="-_Task-1:-Markdown_-"><font color="green"> _Task 1: Markdown_ </font><a class="anchor-link" href="#-_Task-1:-Markdown_-"> </a></h3><ol>
+<li>Look up the shortcuts to create new cells and create a new cell below this one.</li>
+<li>Each cell can be in an edit mode (enter it with enter and leave it without execution with escape). While not in the edit mode, its type can be adjusted. Change the mode of the newly created cell to be a Markdown cell.</li>
+<li>What's Markdown? Look it up, google is your <em>friend</em>.</li>
+<li>Use Markdown to create a formatted cell including:<ul>
+<li>a title with your name</li>
+<li>two sentences about your studies and / or research</li>
+<li>mark the keywords in your text with a bold font type</li>
+<li>add an item list of analysis methods you are interested in </li>
+<li>add a enumerated list of expertises you expect to learn in this course</li>
+</ul>
+</li>
+</ol>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="LaTex">LaTex<a class="anchor-link" href="#LaTex"> </a></h1><p>LaTex is a type setting system to create scientificly butityful documents. However, you can reduce its capabilities to render equations in Markdown cells.</p>
+<p>You basically need a so called <em>equation</em> environment enclosing your definition of the mathematical expression. An input like</p>
+<div class="highlight"><pre><span></span><span class="k">\begin</span><span class="nb">{</span>equation<span class="nb">}</span>
+a<span class="nb">^</span>2 + b<span class="nb">^</span>2 = c<span class="nb">^</span>2
+<span class="k">\end</span><span class="nb">{</span>equation<span class="nb">}</span>
+</pre></div>
+<p>will produce the following output:</p>
+\begin{equation}
+a^2 + b^2 = c^2
+\end{equation}<p>A nice overview of what can be done in LaTex mathematical expressions can be found here: <a href="https://en.wikibooks.org/wiki/LaTeX/Mathematics">https://en.wikibooks.org/wiki/LaTeX/Mathematics</a></p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="-_Task-2:-LaTex_-"><font color="green"> _Task 2: LaTex_ </font><a class="anchor-link" href="#-_Task-2:-LaTex_-"> </a></h3><ol>
+<li>Create a new Markdown cell below this one.</li>
+<li>Think of your favourite equation and express it in LaTex. In case you have none, pitty you, just take mine:</li>
+</ol>
+<p><img src="images/navier-stokes.png" style="width:550px;"/></p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<hr>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Python">Python<a class="anchor-link" href="#Python"> </a></h1><p>Python is a programming language, which is</p>
+<ul>
+<li>easy to read</li>
+<li>simple</li>
+<li>portable</li>
+<li>and wildly used worldwide.</li>
+</ul>
+<p>Short remark: There are two major versions of Python, 2 and 3. If you are a beginner, forget about 2. Otherwise move to 3, if not already happened.</p>
+<p>Some links to browse to:</p>
+<ul>
+<li>Wikipedia: <a href="https://en.wikipedia.org/wiki/Python_(programming_language">https://en.wikipedia.org/wiki/Python_(programming_language</a>)</li>
+<li>Homepage: <a href="https://www.python.org">https://www.python.org</a></li>
+<li>TIOBE programming language index: <a href="https://www.tiobe.com/tiobe-index/">https://www.tiobe.com/tiobe-index/</a></li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Scalar-Data-Types">Scalar Data Types<a class="anchor-link" href="#Scalar-Data-Types"> </a></h2><p>The fundamental scalar data types in Python are</p>
+<ul>
+<li>bools</li>
+<li>integers</li>
+<li>floating point numbers</li>
+<li>character strings</li>
+<li>none</li>
+</ul>
+<h3 id="Bools">Bools<a class="anchor-link" href="#Bools"> </a></h3><p>Take eiter a true value, in Python expressed as <code>True</code>, or a false one, here <code>False</code>.</p>
+<h3 id="Integers-and-Floats">Integers and Floats<a class="anchor-link" href="#Integers-and-Floats"> </a></h3><p>Well, integers and floating point nubmers. The decimal separator is a dot, <code>.</code>, and floats can also be expressed in exponential form, like <code>1.5e-3</code>.</p>
+<h3 id="Character-Strings">Character Strings<a class="anchor-link" href="#Character-Strings"> </a></h3><p>This type represents a sring of characters, where the string is enclosed by <code>"</code> or by <code>'</code>. The number of characters in a string can be variable.</p>
+<h3 id="None-Type">None Type<a class="anchor-link" href="#None-Type"> </a></h3><p>If needed, a value can be expressed as none, in Python <code>None</code>, to indicate that the value is empty or non-existent.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Basic-Operations">Basic Operations<a class="anchor-link" href="#Basic-Operations"> </a></h2><h3 id="Arithmetic-Operations">Arithmetic Operations<a class="anchor-link" href="#Arithmetic-Operations"> </a></h3><p>The results of the operations result in the same type as the operands or in a more general one.</p>
+<ul>
+<li><code>+</code>: Addition</li>
+<li><code>-</code>: Subtraction</li>
+<li><code>*</code>: Multiplication</li>
+<li><code>/</code>: Division</li>
+<li><code>//</code>: Floor Division</li>
+<li><code>%</code>: Modulo</li>
+<li><code>**</code>: Power</li>
+</ul>
+<h3 id="Logical-Operations">Logical Operations<a class="anchor-link" href="#Logical-Operations"> </a></h3><p>The results are either <code>False</code> or <code>True</code>.</p>
+<ul>
+<li><code>==</code>: Equal To</li>
+<li><code>&gt;</code>: Greater Than</li>
+<li><code>&gt;=</code>: Greater Than or Equal To</li>
+<li><code>&lt;</code>: Less Than</li>
+<li><code>&lt;=</code>: Less Than or Equal To</li>
+<li><code>!=</code>: Not Equal</li>
+<li><code>and</code>: Logical and</li>
+<li><code>or</code>: Logical or</li>
+<li><code>not</code>: Logical negation</li>
+</ul>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="-_Task-3:-Basic-Operations_-"><font color="green"> _Task 3: Basic Operations_ </font><a class="anchor-link" href="#-_Task-3:-Basic-Operations_-"> </a></h3><p>To solve the following tasks, just create new cells and execute them. The results will be displayed directly. Try to create mathematical expressions of the questions below.</p>
+<ol>
+<li>4 + 2 * 4 = ?</li>
+<li>2 to the power of 10?</li>
+<li>What is the remainder of 315 divided by 4?</li>
+<li>Is the ratio of 44 to 4.5 larger than 10?</li>
+<li>Is it true that 4.5 is greater than 4 and smaller than 5?</li>
+<li>What happens if you add <code>"Python"</code> to <code>"for beginners"</code>?</li>
+<li>Create a string that contains 10 times the string <code>"Tick"</code>.</li>
+<li>Which string is smaller: <code>"aachen"</code> or <code>"Bern"</code>? How are strings compared?</li>
+</ol>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Functions">Functions<a class="anchor-link" href="#Functions"> </a></h3><p>Functions encapsulate complex operations and can be in general executed with respect to various arguments. A function has a name and a list of arguments. To call a function, use its name and the arguments enclosed in <code>()</code>.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="-_Task-4:-Function-Calls_-"><font color="green"> _Task 4: Function Calls_ </font><a class="anchor-link" href="#-_Task-4:-Function-Calls_-"> </a></h3><p>What do the following functions do? Just try it.</p>
+<ol>
+<li><code>abs(5)</code> and <code>abs(-1.2)</code></li>
+<li><code>float(5)</code></li>
+<li><code>int(4.5)</code></li>
+<li><code>min(6,9)</code></li>
+<li><code>type(5)</code>, <code>type(5.7)</code> and <code>type(4&gt;2)</code></li>
+<li><code>print("Simple output")</code></li>
+<li><code>str(5+7)</code></li>
+</ol>
+<p>A list of all build-in funcitons in Python is available here: <a href="https://docs.python.org/3/library/functions.html">https://docs.python.org/3/library/functions.html</a></p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="-_Task-5:-String-Creation-I_-"><font color="green"> _Task 5: String Creation I_ </font><a class="anchor-link" href="#-_Task-5:-String-Creation-I_-"> </a></h3><p>A very common task is to create strings containing dynamical values, like for output to files or labeling of figures. One way to acomplish this is to use the <code>format</code> function of the string type.</p>
+<p>The full documentation of the format capabilities is available here: <a href="https://docs.python.org/3.7/library/string.html#format-string-syntax">https://docs.python.org/3.7/library/string.html#format-string-syntax</a></p>
+<p>Format in a nutshell: You create a string, which contains placeholders <code>{}</code> that will be replaced by string representations of passed arguments. For example</p>
+<div class="highlight"><pre><span></span><span class="s2">&quot;My favourite number is: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+</pre></div>
+<p>will result in the following string <code>"My favourite number is: 12"</code>. Advanced formattiong of the replacement can be specified inside the <code>{}</code>.</p>
+<p>Check out the following examples:</p>
+<ol>
+<li><code>"fixed width number {:6d}.".format(144)</code>, here the <code>d</code> states, that the output will be a decimal based integer, with an output width of <code>6</code>. Change the width to 10. What is the output in base 8?</li>
+<li><code>"two floating point numbers, like {:12.4f} or {:e}, are nice".format(1015.34, 1015.34)</code>, here the <code>e</code> and <code>f</code> define the way the floating point number are expressed. The first number indictates again the width, while the second one defines the precission. Change the expression to output only two digits after the decimal point. Can you make the created exponent marker <code>e</code> become capital, i.e. <code>E</code>?</li>
+<li><code>"{:&lt;8d} {:08d} {:+8d}".format(12, 12, 12)</code>, can you guess, what the operations <code>&lt;</code> and <code>+</code> do? What is the effect of a precessing <code>0</code> in the width definition? </li>
+</ol>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="-_Task-6:-String-Creation-II_-"><font color="green"> _Task 6: String Creation II_ </font><a class="anchor-link" href="#-_Task-6:-String-Creation-II_-"> </a></h3><p>Create strings containing the specified expressions.</p>
+<ol>
+<li>The type of [a nmber] is [type of this number], while the type of the logical expression [type of this number is less than 10].</li>
+<li>Given the base [integer] and the exponent [float], the result is [the integer to the power of the float, shown with two digits after the decimal point].</li>
+<li>Given two number [a] and [b] the absolute minimum of those is [min of abs of both].</li>
+</ol>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Variables">Variables<a class="anchor-link" href="#Variables"> </a></h2><p>Pure numbers, i.e. constant values, are of limited use. In general variables are defined, which can take any value and the expressions are formulated as functions of any variables.</p>
+<p>A variable is created by assigning a value to it, i.e. using the assing operator <code>=</code>:</p>
+<div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mf">5.7</span>
+<span class="n">b</span> <span class="o">=</span> <span class="s2">&quot;no number here&quot;</span>
+<span class="n">c</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">&gt;</span> <span class="mi">8</span>
+</pre></div>
+<p>The type of the variable may change with any assignment.</p>
+<p>The variables' value is accessed with the variable name:</p>
+<div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">a</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;the value of d is </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="-_Task-7:-Variables_-"><font color="green"> _Task 7: Variables_ </font><a class="anchor-link" href="#-_Task-7:-Variables_-"> </a></h3><ol>
+<li>Assing the values of 12 [a] and 14 [b] to two variables.</li>
+<li>Assing the ratio (a over b) of this two variables to a new one [c].</li>
+<li>Print the values and types of all three variables.</li>
+<li>Assign the value <code>"overwrite"</code> to variable [c] and print its type.</li>
+</ol>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Lists">Lists<a class="anchor-link" href="#Lists"> </a></h2><p>Very often, a set of numbers, here a list is needed. In Python they are defined as comma separated values enclosed by <code>[]</code>. The type of the elements does not have to be equal.</p>
+<p>For example:</p>
+<div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">]</span>
+<span class="p">[</span><span class="mf">2.2</span><span class="p">,</span> <span class="mf">6.7</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.0</span><span class="p">]</span>
+<span class="p">[</span><span class="s2">&quot;abc&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">7.1</span><span class="p">,</span> <span class="kc">False</span><span class="p">]</span>
+</pre></div>
+<p>Once assigned to a variable, individual elements can be accessed via the accesses operator <code>[]</code>. The index of the target elemet is starting with zero. The access of the third element in a list may look like:</p>
+<div class="highlight"><pre><span></span><span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;old value of third element of L: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">L</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+<span class="n">L</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="-_Task-8:-Lists_-"><font color="green"> _Task 8: Lists_ </font><a class="anchor-link" href="#-_Task-8:-Lists_-"> </a></h3><ol>
+<li>Create a list with the first 7 primal numbers and assign it to a variable, e.g. <code>first_numbers</code>.</li>
+<li>Print the full list.</li>
+<li>Set the value of the second element to 144 and print the list.</li>
+<li>Use the function <code>sorted</code> to create a new sorted list and print the new one.</li>
+<li>Use the function <code>append</code> of a list to create a new element at the end of the list, e.g. <code>first_numbers.append(5)</code>. Add two elements with the value 99 to the list and print it.</li>
+<li>Create a new list with the function <code>set</code> applied to your extended list. What happened here?</li>
+</ol>
+
+</div>
+</div>
+</div>
+</div>
+
+ 
+
+
+    </main>
+    
+            </div>
+            <div class="c-textbook__footer" id="textbook_footer">
+              
+<nav class="c-page__nav">
+  
+    
+    
+
+    <a id="js-page__nav__prev" class="c-page__nav__prev" href="">
+      〈 <span class="u-margin-right-tiny"></span> 
+    </a>
+  
+
+  
+    
+
+    
+    <a id="js-page__nav__next" class="c-page__nav__next" href="/02_flow_control/02_flow_control.html">
+      Flow Control <span class="u-margin-right-tiny"></span> 〉
+    </a>
+  
+</nav>
+
+              <footer>
+  <p class="footer">This page was created by <a href="https://github.com/jupyter/jupyter-book/graphs/contributors">The Jupyter Book Community</a></p>
+</footer>
+
+            </div>
+
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
